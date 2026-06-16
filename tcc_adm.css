@@ -362,94 +362,116 @@ footer {
         padding: 0 16px;
     }
 
-    /* HEADER - Título e links maiores, mas com hierarquia */
+    /* HEADER - remove sticky, centraliza e aumenta espaçamento */
     header {
+        position: relative;
         padding: 0;
     }
+
     .navbar {
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: 12px 0 10px;
-        gap: 10px;
+        padding: 20px 0 16px;
+        gap: 14px;
     }
+
+    /* LOGO - vertical, imagem maior, texto centralizado */
     .logo {
+        flex-direction: column;
         justify-content: center;
-        gap: 10px;
+        align-items: center;
+        gap: 8px;
     }
+
     .logo-img {
-        width: 40px;
-        height: 40px;
+        width: 70px;
+        height: 70px;
     }
-    /* TÍTULO PRINCIPAL - maior e em destaque */
+
+    .logo-text {
+        text-align: center;
+    }
+
     .logo-text h1 {
-        font-size: 1.8rem; /* aumentado consideravelmente */
-        line-height: 1.2;
+        font-size: 2.4rem;
+        line-height: 1;
+        font-weight: 900;
     }
-    /* SUBTÍTULO - também maior, mas menor que o título */
+
     .logo-text p {
-        font-size: 0.8rem;
+        font-size: 1rem;
         line-height: 1.3;
+        margin-top: 4px;
         letter-spacing: 0.5px;
-        margin-top: 2px;
     }
-    /* LINKS DO MENU - maiores, mas menores que o título */
+
+    /* MENU - links maiores e mais espaçados */
     .nav-links {
         justify-content: center;
-        gap: 12px 20px;
+        gap: 18px 24px;
         width: 100%;
-        margin-top: 4px;
+        margin-top: 10px;
     }
+
     .nav-links a {
-        font-size: 1.05rem; /* aumentado, mas ainda menor que o título */
+        font-size: 1.15rem;
+        font-weight: 600;
         padding: 4px 0;
         white-space: nowrap;
     }
-    /* Ajuste do sublinhado para ficar dentro do cabeçalho */
+
     .nav-links a::after {
-        bottom: -2px; /* mais próximo do texto, sem vazar */
+        bottom: 0;
         height: 2px;
     }
 
-    /* HERO */
+    /* HERO - títulos ligeiramente maiores */
     .hero {
         padding: 40px 0 30px;
     }
+
     .hero h2 {
-        font-size: 1.6rem;
+        font-size: 1.8rem;
         line-height: 1.3;
     }
+
     .hero h2 span br {
         display: none;
     }
+
     .hero p {
-        font-size: 0.95rem;
+        font-size: 1rem;
         padding: 0 4px;
     }
 
-    /* STATS - uma coluna, com números maiores */
+    /* STATS - uma coluna, números maiores */
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 16px;
         margin: 30px 0 20px;
     }
+
     .stat-card {
         padding: 20px 14px;
         border-radius: 20px;
     }
+
     .stat-number {
-        font-size: 2.6rem; /* um pouco maior */
+        font-size: 2.8rem;
     }
+
     .stat-label {
         font-size: 0.95rem;
         margin-top: 8px;
     }
 
-    /* SECTION TITLES */
+    /* SECTION TITLES - maiores */
     .section-title {
-        font-size: 1.7rem; /* maior */
+        font-size: 1.9rem;
         margin-bottom: 14px;
     }
+
     .section-sub {
         font-size: 0.95rem;
         margin-bottom: 20px;
@@ -463,6 +485,7 @@ footer {
         font-size: 1rem;
         border-left-width: 4px;
     }
+
     .highlight-box ul li {
         font-size: 0.95rem;
     }
@@ -472,9 +495,11 @@ footer {
         padding: 20px 16px;
         margin: 18px 0;
     }
+
     .simulator-card h3 {
         font-size: 1.2rem;
     }
+
     .simulator-card p {
         font-size: 0.95rem;
     }
@@ -484,18 +509,22 @@ footer {
         gap: 16px;
         margin: 24px 0;
     }
+
     .chart-item {
         width: calc(50% - 16px);
         min-width: 120px;
         padding: 14px;
     }
+
     .pie-chart {
         width: 80px;
         height: 80px;
     }
+
     .chart-value {
         font-size: 1.3rem;
     }
+
     .chart-item div:last-child {
         font-size: 0.8rem;
     }
@@ -505,14 +534,17 @@ footer {
         padding: 18px 16px;
         margin: 16px 0;
     }
+
     .card-medidas h3 {
         font-size: 1.2rem;
     }
+
     .card-medidas li {
         font-size: 0.9rem;
         padding-left: 22px;
         margin: 10px 0;
     }
+
     .card-medidas li i {
         font-size: 0.9rem;
     }
@@ -522,6 +554,7 @@ footer {
         padding: 24px 0;
         font-size: 0.8rem;
     }
+
     footer p {
         margin-bottom: 4px;
     }
