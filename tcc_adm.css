@@ -1,7 +1,13 @@
+/* ========== RESET E BASE ========== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html, body {
+    overflow-x: hidden; /* elimina rolagem horizontal */
+    width: 100%;
 }
 
 body {
@@ -10,7 +16,6 @@ body {
     color: #ECECEC;
     line-height: 1.6;
     scroll-behavior: smooth;
-    overflow-x: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -39,6 +44,7 @@ header {
     position: sticky;
     top: 0;
     z-index: 1000;
+    width: 100%;
 }
 
 .navbar {
@@ -82,6 +88,7 @@ header {
 .nav-links {
     display: flex;
     gap: 32px;
+    flex-wrap: wrap;
 }
 
 .nav-links a {
@@ -91,6 +98,7 @@ header {
     font-size: 0.95rem;
     transition: 0.2s;
     position: relative;
+    white-space: nowrap;
 }
 
 .nav-links a:hover {
@@ -358,35 +366,45 @@ footer {
         padding: 0 16px;
     }
 
-    /* Header */
+    /* HEADER */
+    header {
+        padding: 0;
+    }
     .navbar {
         flex-direction: column;
+        align-items: center;
         text-align: center;
-        padding: 12px 0;
+        padding: 12px 0 10px;
+        gap: 8px;
+    }
+    .logo {
+        justify-content: center;
         gap: 10px;
-    }
-    .logo-text h1 {
-        font-size: 1.1rem;
-    }
-    .logo-text p {
-        font-size: 0.6rem;
-        line-height: 1.2;
     }
     .logo-img {
         width: 36px;
         height: 36px;
     }
+    .logo-text h1 {
+        font-size: 1.1rem;
+    }
+    .logo-text p {
+        font-size: 0.55rem;
+        line-height: 1.2;
+        letter-spacing: 0.3px;
+    }
     .nav-links {
-        flex-wrap: wrap;
         justify-content: center;
-        gap: 8px 14px;
+        gap: 6px 14px;
+        width: 100%;
     }
     .nav-links a {
         font-size: 0.8rem;
         padding: 4px 0;
+        white-space: nowrap;
     }
 
-    /* Hero */
+    /* HERO */
     .hero {
         padding: 40px 0 30px;
     }
@@ -394,18 +412,15 @@ footer {
         font-size: 1.5rem;
         line-height: 1.3;
     }
-    .hero h2 span {
-        display: inline;
-    }
     .hero h2 span br {
-        display: none; /* remove a quebra forçada */
+        display: none; /* remove quebra forçada */
     }
     .hero p {
         font-size: 0.9rem;
         padding: 0 4px;
     }
 
-    /* Stats - uma coluna em telas pequenas */
+    /* STATS - uma coluna */
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -423,7 +438,7 @@ footer {
         margin-top: 6px;
     }
 
-    /* Section titles */
+    /* SECTION TITLES */
     .section-title {
         font-size: 1.4rem;
         margin-bottom: 12px;
@@ -435,7 +450,7 @@ footer {
         padding: 0 6px;
     }
 
-    /* Highlight box */
+    /* HIGHLIGHT */
     .highlight-box {
         padding: 16px;
         margin: 16px 0;
@@ -447,7 +462,7 @@ footer {
         word-break: break-word;
     }
 
-    /* Simulator card */
+    /* SIMULATOR */
     .simulator-card {
         padding: 18px 14px;
         margin: 16px 0;
@@ -466,7 +481,7 @@ footer {
         height: 16px;
     }
 
-    /* Charts - 2 por linha ou 1 */
+    /* CHARTS - 2 por linha */
     .chart-container {
         gap: 14px;
         margin: 20px 0;
@@ -490,7 +505,7 @@ footer {
         line-height: 1.2;
     }
 
-    /* Medidas cards */
+    /* MEDIDAS */
     .card-medidas {
         padding: 16px 14px;
         margin: 14px 0;
@@ -509,7 +524,7 @@ footer {
         font-size: 0.8rem;
     }
 
-    /* Footer */
+    /* FOOTER */
     footer {
         padding: 20px 0;
         font-size: 0.7rem;
@@ -552,7 +567,6 @@ footer {
 
     .nav-links a {
         font-size: 0.7rem;
-        gap: 6px 10px;
     }
     .logo-text h1 {
         font-size: 0.95rem;
