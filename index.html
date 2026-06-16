@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>TCC | Técnico Administração</title>
+    <link rel="icon" type="image/x-icon" href="tigre.ico" />
+    <link rel="shortcut icon" href="tigre.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="tcc_adm.css" />
+</head>
+<body>
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <img src="tiger.png" alt="Tigre" class="logo-img" onerror="this.style.display='none'" />
+                <div class="logo-text">
+                    <h1>JOGO JUSTO | TCC</h1>
+                    <p>Impactos Socioeconômicos das Apostas Online</p>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="#impactos">Impactos</a>
+                <a href="#matematica">Matemática</a>
+                <a href="simulacao.html">Simulação</a>
+                <a href="#medidas">Regulação</a>
+                <a href="#pesquisa">Pesquisa</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Apostas Online no Brasil: <span><br>Entretenimento ou Risco Social?</span></h2>
+            <p>R$ 20 bilhões movimentados por mês. 24 milhões de apostadores. R$ 3 bilhões do Bolsa Família destinados às bets em apenas um mês. Prejuízo anual estimado de R$ 38,8 bilhões.</p>
+        </div>
+    </section>
+
+    <div class="container" id="impactos">
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-number" data-target="20">R$ 0 bi</div><div class="stat-label">movimentados por mês no Brasil</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="24">0 mi</div><div class="stat-label">apostadores regulares no Brasil</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="38.8">R$ 0 bi</div><div class="stat-label">prejuízos anuais com apostas</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="84.7">0%</div><div class="stat-label">acham as apostas prejudiciais</div></div>
+        </div>
+    </div>
+
+    <section id="matematica">
+        <div class="container">
+            <h2 class="section-title">Como a Casa Sempre Vence? A Matemática do Vício</h2>
+            <div class="highlight-box">
+                <p><strong>As bets utilizam princípios matemáticos de probabilidade e valor esperado para garantir lucro no longo prazo.</strong> As odds são ajustadas para que o pagamento ao apostador seja sempre inferior ao valor justo.</p>
+                <p style="margin-top: 12px;">Exemplo: em um evento com 50% de chance, a odd justa seria 2.0. As casas oferecem ~1.90. Essa diferença é a <strong style="color: #f97316;">margem da casa</strong> — uma vantagem estatística constante de 5%.</p>
+                <div style="background: rgba(249, 115, 22, 0.15); border-radius: 12px; padding: 15px; margin-top: 15px;">
+                    <strong style="color: #f97316;"> Big Data e IA</strong>
+                    <p style="margin-top: 5px;">Ajustam odds em tempo real, tornando a competição desleal para o apostador comum.</p>
+                </div>
+            </div>
+            <div class="simulator-card">
+                <h3 style="color:#f97316; margin-bottom: 15px;">Valor Esperado Negativo</h3>
+                <p><strong>Probabilidade real:</strong> 50% → Odd justa 2.00</p>
+                <p><strong>Odd oferecida:</strong> <span id="oddValue">1.90</span> → Vantagem da casa = <span id="houseEdge">5.26</span>%</p>
+                <div class="slider-container"><label>Simule a odd oferecida:</label><input type="range" id="oddSlider" min="1.50" max="2.00" step="0.01" value="1.90" /></div>
+                <div class="progress-bar-bg"><div id="edgeBar" style="width: 5.26%; background: linear-gradient(90deg, #f97316, #faa53d); height: 8px; border-radius: 4px;"></div></div>
+                <p>A cada R$ 100 apostados, o retorno médio é R$ <span id="expectedReturn">95.00</span>. A casa fica com R$ <span id="houseTake">5.00</span>.</p>
+                <div style="background: rgba(249, 115, 22, 0.15); border-radius: 8px; padding: 10px; margin-top: 15px;">⚠️ Vitórias ocasionais criam ilusão de controle</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pesquisa">
+        <div class="container">
+            <h2 class="section-title">O que a População Realmente Pensa?</h2>
+            <p class="section-sub">Pesquisa realizada com <strong>334 participantes</strong> | Dados coletados entre 2025 - 2026 | TCC - ETEC Dep. Salim Sedeh</p>
+            <div class="chart-container">
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 96.4%, #2a2a35 96.4% 100%);"></div><div class="chart-value">96,4%</div><div>Conhecem apostas online</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 41.9%, #2a2a35 41.9% 100%);"></div><div class="chart-value">41,9%</div><div>Já apostaram pelo menos uma vez</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 75.4%, #2a2a35 75.4% 100%);"></div><div class="chart-value">75,4%</div><div>Conhecem alguém afetado negativamente</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 84.7%, #2a2a35 84.7% 100%);"></div><div class="chart-value">84,7%</div><div>Acreditam que apostas são prejudiciais</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 84.4%, #2a2a35 84.4% 100%);"></div><div class="chart-value">84,4%</div><div>Apoiam mais restrições</div></div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Faixa etária dos participantes (334 respondentes):</strong></p>
+                <ul style="margin-top: 10px; list-style: none;"><li>• 18 a 30 anos: <strong>45,2%</strong></li><li>• Mais de 30 anos: <strong>36,8%</strong></li><li>• Menos de 18 anos: <strong>18,0%</strong></li></ul>
+                <hr style="margin: 15px 0; border-color: #f97316;" />
+                <p><strong>Principais motivações para apostar:</strong></p>
+                <ul style="margin-top: 10px; list-style: none;"><li>• Ganhar dinheiro: <strong>19,5%</strong></li><li>• Diversão: <strong>10,5%</strong></li><li>• Influência de amigos/familiares: <strong>9,0%</strong></li><li>• Nunca apostaram: <strong>58,1%</strong></li></ul>
+                <p style="margin-top: 15px;"> ✓ <strong>Conclusão:</strong> A sociedade demonstra preocupação e apoio a medidas que tragam mais controle e proteção aos consumidores.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="medidas" style="background: #050508;">
+        <div class="container">
+            <h2 class="section-title">Medidas para um Ambiente de Apostas Mais Seguro</h2>
+            <p class="section-sub">Baseado nos dados coletados (334 participantes, 84,4% apoiam mais restrições) e nas experiências internacionais, apresentamos sugestões que podem ser adotadas.</p>
+            <div class="card-medidas"><h3>Medidas de Controle e Transparência</h3><ul><li><i class="fas fa-fingerprint"></i> <strong>Cadastro com Verificação Biométrica</strong> - Sistema obrigatório de identificação com análise facial.</li><li><i class="fas fa-chart-line"></i> <strong>Limitação Progressiva de Apostas</strong> - Tetos para novos usuários nos primeiros 30 dias.</li><li><i class="fas fa-ban"></i> <strong>Restrição à Publicidade</strong> - Alertas visíveis sobre riscos, similar às campanhas antitabaco.</li><li><i class="fas fa-chart-simple"></i> <strong>Transparência nas Probabilidades</strong> - Exibir: "A expectativa matemática desta aposta é de perda."</li></ul></div>
+            <div class="card-medidas"><h3>Mecanismos de Proteção ao Consumidor</h3><ul><li><i class="fas fa-power-off"></i> <strong>Autoexclusão Unificada</strong> - Cadastro nacional para bloqueio de CPF em todas as plataformas.</li><li><i class="fas fa-bell"></i> <strong>Alertas de Comportamento</strong> - Notificações ao atingir 30%, 50% e 100% do limite de gastos.</li><li><i class="fas fa-clock"></i> <strong>Pausas Obrigatórias</strong> - "Cooldown" após sessões prolongadas de jogo.</li><li><i class="fas fa-gift"></i> <strong>Fim dos Bônus Abusivos</strong> - Proibir bônus excessivos que estimulam o primeiro depósito.</li></ul></div>
+            <div class="card-medidas"><h3>Ações Conjuntas com o Setor Privado</h3><ul><li><i class="fas fa-university"></i> <strong>Parcerias com Bancos</strong> - Alertas de gastos com apostas.</li><li><i class="fab fa-instagram"></i> <strong>Responsabilidade das Plataformas Digitais</strong> - Restringir anúncios para jovens e vulneráveis.</li><li><i class="fas fa-chalkboard-user"></i> <strong>Campanhas Educativas</strong> - Conscientização nas escolas.</li></ul></div>
+            <div class="card-medidas"><h3>Educação e Conscientização</h3><ul><li><i class="fas fa-school"></i> <strong>Inclusão no Currículo Escolar</strong> - Educação financeira nas escolas.</li><li><i class="fas fa-phone-alt"></i> <strong>Canais de Apoio</strong> - Atendimento psicológico e financeiro para afetados pelo vício.</li><li><i class="fas fa-chalkboard-teacher"></i> <strong>Campanhas Públicas</strong> - Conscientização sobre o "jogo responsável".</li></ul></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Trabalho de Conclusão de Curso - ETEC Dep. Salim Sedeh | Técnico Administrativo 2026</p>
+            <p>Autores: Emilly Romero Montes, Emily Cristine Emidio, Isabela Santos Camargo, Isabella dos Santos Mano, Jennifer Sampaio Souza</p>
+            <p>Dados: Banco Central (Nota Técnica 513/2024) e pesquisa primária com 334 participantes (2025 - 2026)</p>
+            <p style="margin-top: 5px; font-size: 0.7rem;">Orientador: Prof. Éder Jonas Oliveira de Moraes</p>
+        </div>
+    </footer>
+
+    <script src="tcc_adm.js"></script>
+</body>
+</html>
