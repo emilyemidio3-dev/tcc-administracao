@@ -1,54 +1,205 @@
-// Count-up animation
-const counters = document.querySelectorAll('.stat-number[data-target]');
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if(entry.isIntersecting){
-            const el = entry.target;
-            const target = parseFloat(el.dataset.target);
-            let current = 0;
-            const updateCounter = () => {
-                let increment = target / 45;
-                if(current < target){
-                    current += increment;
-                    if(current >= target) current = target;
-                    if(target === 20) el.innerText = 'R$ ' + current.toFixed(0) + ' bi';
-                    else if(target === 24) el.innerText = Math.floor(current) + ' mi';
-                    else if(target === 38.8) el.innerText = 'R$ ' + current.toFixed(1) + ' bi';
-                    else if(target === 84.7) el.innerText = current.toFixed(1) + '%';
-                    setTimeout(updateCounter, 18);
-                } else {
-                    if(target === 20) el.innerText = 'R$ 20 bi';
-                    else if(target === 24) el.innerText = '24 mi';
-                    else if(target === 38.8) el.innerText = 'R$ 38,8 bi';
-                    else if(target === 84.7) el.innerText = '84,7%';
-                }
-            };
-            updateCounter();
-            observer.unobserve(el);
+// símbolos
+const SYMBOLS = [
+    { id: 'banana',  src: 'banana.png', multiplier: 2,  probability: 0.35 },
+    { id: 'fruit',   src: 'fruit.png',  multiplier: 3,  probability: 0.25 },
+    { id: 'grape',   src: 'grape.png',  multiplier: 5,  probability: 0.18 },
+    { id: 'money',   src: 'money.png',  multiplier: 8,  probability: 0.12 },
+    { id: 'bag',     src: 'bag.png',    multiplier: 12, probability: 0.06 },
+    { id: 'cards',   src: 'cards.png',  multiplier: 25, probability: 0.03 },
+    { id: 'seven',   src: 'seven.png',  multiplier: 40, probability: 0.01 }
+];
+
+// estado do jogo
+let balance = 30;       // saldo inicial
+let currentBet = 10;    // aposta selecionada
+let totalBet = 0;       // total apostado (acumulado)
+let totalWon = 0;       // total ganho (acumulado)
+let totalLost = 0;      // total perdido (acumulado)
+let spinning = false;   // trava para evitar múltiplos giros
+
+// elementos dom
+const slotElements = [
+    document.getElementById('slot1'),
+    document.getElementById('slot2'),
+    document.getElementById('slot3')
+];
+const balanceEl = document.getElementById('balance');
+const totalBetEl = document.getElementById('totalBet');
+const totalWonEl = document.getElementById('totalWon');
+const totalLostEl = document.getElementById('totalLost');
+const currentBetDisplay = document.getElementById('currentBetDisplay');
+const gameMessageEl = document.getElementById('gameMessage');
+const spinBtn = document.getElementById('spinBtn');
+const restartBtn = document.getElementById('restartBtn');
+const betButtons = document.querySelectorAll('.bet-btn');
+
+// sortear símbolo probabilidade
+function getRandomSymbol() {
+    const rand = Math.random();
+    let cumulative = 0;
+    for (const symbol of SYMBOLS) {
+        cumulative += symbol.probability;
+        if (rand <= cumulative) {
+            return symbol;
+        }
+    }
+    // fallback (nunca deve acontecer)
+    return SYMBOLS[0];
+}
+
+// gerar 3 símbolos aleatórios
+function generateSpinResult() {
+    return [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
+}
+
+// verifica vitórias (3 iguais)
+// retorna o multiplicador ou 0 se perdeu
+function checkWin(symbols) {
+    const [s1, s2, s3] = symbols;
+    // ganha se os três forem exatamente o mesmo símbolo
+    if (s1.id === s2.id && s2.id === s3.id) {
+        return s1.multiplier;   // multiplicador do símbolo
+    }
+    return 0;   // perdeu
+}
+
+// autualiza a interface
+function updateUI() {
+    // Atualiza os valores numéricos
+    balanceEl.textContent = balance;
+    totalBetEl.textContent = totalBet;
+    totalWonEl.textContent = totalWon;
+    totalLostEl.textContent = totalLost;
+    currentBetDisplay.textContent = currentBet;
+
+    // atualiza os botões de aposta (comportamento radio)
+    betButtons.forEach(btn => {
+        const val = parseInt(btn.dataset.bet);
+        btn.classList.toggle('active', val === currentBet);
+    });
+
+    // gerencia fim de jogo (saldo < 5)
+    const gameOver = balance < 5;
+    if (gameOver) {
+        spinBtn.style.display = 'none';
+        restartBtn.style.display = 'block';
+        gameMessageEl.innerHTML = '<div style="color:#f97316; font-weight:600;">💸 Fim do jogo! A casa sempre vence no longo prazo.</div>';
+    } else {
+        spinBtn.style.display = 'block';
+        restartBtn.style.display = 'none';
+        spinBtn.disabled = (balance < currentBet) || spinning;
+    }
+}
+
+// exibir os símbolos nos slots
+function renderSlots(symbols) {
+    symbols.forEach((symbol, index) => {
+        slotElements[index].innerHTML = `<img src="${symbol.src}" alt="${symbol.id}">`;
+    });
+}
+
+// girar
+function spin() {
+    // Verifica se pode girar
+    if (spinning) return;
+    if (balance < currentBet) {
+        gameMessageEl.innerHTML = '<div style="color:#ef4444;">Saldo insuficiente para essa aposta.</div>';
+        return;
+    }
+
+    // inicia o giro – bloqueia novos cliques
+    spinning = true;
+    spinBtn.disabled = true;
+
+    // deduz a aposta do saldo ANTES do sorteio
+    balance -= currentBet;
+    totalBet += currentBet;
+    updateUI();
+
+    // animação rápida (12 trocas)
+    let spinCount = 0;
+    const interval = setInterval(() => {
+        // gera três símbolos aleatórios para o efeito
+        const tempSymbols = generateSpinResult();
+        renderSlots(tempSymbols);
+        spinCount++;
+
+        if (spinCount >= 12) {
+            clearInterval(interval);
+
+            // sorteio final (resultado real)
+            const finalSymbols = generateSpinResult();
+            renderSlots(finalSymbols);
+
+            // verifica vitória
+            const multiplier = checkWin(finalSymbols);
+            let winAmount = 0;
+
+            if (multiplier > 0) {
+                // ganhou – calcula prêmio
+                winAmount = currentBet * multiplier;
+                balance += winAmount;
+                totalWon += winAmount;
+                gameMessageEl.innerHTML = `<div style="color:#fbbf24; font-weight:600;">🎉 VITÓRIA! Ganhou R$ ${winAmount} (x${multiplier}) 🎉</div>`;
+            } else {
+                // perdeu
+                totalLost += currentBet;
+                gameMessageEl.innerHTML = '<div style="color:#ef4444; font-weight:600;">❌ Você perdeu.</div>';
+            }
+
+            // atualiza interface com os novos valores
+            updateUI();
+
+            // libera o botão para novo giro
+            spinning = false;
+            spinBtn.disabled = false;
+
+            // verifica se o jogo acabou
+            if (balance < 5) {
+                updateUI(); // reavalia estado de game over
+            }
+        }
+    }, 55); // 55ms entre cada troca
+}
+
+// reiniciar jogo
+function restartGame() {
+    balance = 30;
+    currentBet = 10;
+    totalBet = 0;
+    totalWon = 0;
+    totalLost = 0;
+    spinning = false;
+    spinBtn.disabled = false;
+
+    // reseta slots com banana (símbolo padrão)
+    const defaultSymbol = SYMBOLS[0];
+    renderSlots([defaultSymbol, defaultSymbol, defaultSymbol]);
+
+    gameMessageEl.innerHTML = '';
+    updateUI();
+}
+
+// evento dos botões (radio button)
+betButtons.forEach(btn => {
+    btn.addEventListener('click', function() {
+        if (spinning) return; // não permite mudar durante giro
+        const value = parseInt(this.dataset.bet);
+        if (value <= balance) {
+            currentBet = value;
+            updateUI();
+        } else {
+            gameMessageEl.innerHTML = `<div style="color:#f59e0b;">Saldo insuficiente para aposta de R$ ${value}.</div>`;
         }
     });
-}, {threshold: 0.5});
-counters.forEach(c => observer.observe(c));
+});
 
-// Simulador de vantagem da casa
-const oddSlider = document.getElementById('oddSlider');
-const oddValueSpan = document.getElementById('oddValue');
-const houseEdgeSpan = document.getElementById('houseEdge');
-const expectedReturnSpan = document.getElementById('expectedReturn');
-const houseTakeSpan = document.getElementById('houseTake');
-const edgeBar = document.getElementById('edgeBar');
-function updateHouseEdge() {
-    let odd = parseFloat(oddSlider.value);
-    oddValueSpan.innerText = odd.toFixed(2);
-    let fairOdd = 2.00;
-    let edge = ((1 / odd) - (1 / fairOdd)) * 100;
-    edge = Math.abs(edge).toFixed(2);
-    houseEdgeSpan.innerText = edge;
-    let expectedReturnValue = (odd / fairOdd) * 100;
-    expectedReturnSpan.innerText = expectedReturnValue.toFixed(2);
-    let houseTakeValue = 100 - expectedReturnValue;
-    houseTakeSpan.innerText = houseTakeValue.toFixed(2);
-    edgeBar.style.width = edge + '%';
-}
-oddSlider.addEventListener('input', updateHouseEdge);
-updateHouseEdge();
+// botões principais
+spinBtn.addEventListener('click', spin);
+restartBtn.addEventListener('click', restartGame);
+
+// inicialização
+// configura os slots com banana
+const initialSymbol = SYMBOLS[0];
+renderSlots([initialSymbol, initialSymbol, initialSymbol]);
+updateUI();
