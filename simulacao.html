@@ -159,7 +159,6 @@
             text-align: center;
         }
 
-        /* ========== RESPONSIVO ========== */
         /* Telas médias (tablets) */
         @media (max-width: 900px) {
             .stats-col {
@@ -278,6 +277,25 @@
                 padding: 10px;
                 margin-top: 12px;
             }
+
+            /* Ajuste do cabeçalho da simulação para ficar igual ao principal */
+            .navbar .logo {
+                flex-direction: row;
+                gap: 10px;
+            }
+            .navbar .logo-img {
+                width: 40px;
+                height: 40px;
+            }
+            .navbar .logo-text h1 {
+                font-size: 1.2rem;
+            }
+            .navbar .logo-text p {
+                font-size: 0.65rem;
+            }
+            .nav-links {
+                display: none; /* esconde o link "Voltar" */
+            }
         }
 
         /* Celulares muito pequenos */
@@ -307,16 +325,17 @@
 <body>
     <header>
         <div class="container navbar">
-            <div class="logo">
-                <img src="tiger.png" alt="Tigre" class="logo-img" onerror="this.style.display='none'" />
-                <div class="logo-text">
-                    <h1>JOGO JUSTO | TCC</h1>
-                    <p>Impactos Socioeconômicos das Apostas Online</p>
+
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 14px;">
+                <div class="logo">
+                    <img src="tiger.png" alt="Tigre" class="logo-img" onerror="this.style.display='none'" />
+                    <div class="logo-text">
+                        <h1>JOGO JUSTO | TCC</h1>
+                        <p>Impactos Socioeconômicos das Apostas Online</p>
+                    </div>
                 </div>
-            </div>
-            <div class="nav-links">
-                <a href="index.html">Voltar</a>
-            </div>
+            </a>
+            
         </div>
     </header>
 
@@ -325,9 +344,8 @@
             <h2 class="section-title">Demonstração Experimental: "Jogo do Tigrinho"</h2>
             <p class="section-sub">Esta simulação mostra na prática como a casa sempre leva vantagem no longo prazo. Observe como o saldo tende a diminuir.</p>
 
-            <!-- Wrapper com duas colunas -->
             <div class="simulation-wrapper">
-                <!-- Coluna esquerda: estatísticas -->
+                
                 <div class="stats-col">
                     <div class="stat-item">
                         <i class="fas fa-wallet"></i>
@@ -350,8 +368,7 @@
                         <span class="stat-value" id="totalLost">0</span>
                     </div>
                 </div>
-
-                <!-- Coluna direita: jogo -->
+                
                 <div class="game-col">
                     <div class="slots">
                         <div class="slot" id="slot1"><img src="banana.png" alt="?" /></div>
@@ -392,119 +409,200 @@
         </div>
     </footer>
 
-    <!-- JavaScript da simulação -->
     <script>
-        // Símbolos do jogo
-        const symbols = [
-            { src: "banana.png", multiplier: 2, prob: 0.35, name: "banana" },
-            { src: "fruit.png", multiplier: 3, prob: 0.25, name: "fruit" },
-            { src: "grape.png", multiplier: 5, prob: 0.18, name: "grape" },
-            { src: "money.png", multiplier: 8, prob: 0.12, name: "money" },
-            { src: "bag.png", multiplier: 12, prob: 0.06, name: "bag" },
-            { src: "cards.png", multiplier: 25, prob: 0.03, name: "cards" },
-            { src: "seven.png", multiplier: 40, prob: 0.01, name: "seven" }
+
+        const SYMBOLS = [
+            { id: 'banana',  src: 'banana.png', multiplier: 2,  probability: 0.45 },
+            { id: 'fruit',   src: 'fruit.png',  multiplier: 3,  probability: 0.25 },
+            { id: 'grape',   src: 'grape.png',  multiplier: 5,  probability: 0.14 },
+            { id: 'money',   src: 'money.png',  multiplier: 8,  probability: 0.08 },
+            { id: 'bag',     src: 'bag.png',    multiplier: 12, probability: 0.045 },
+            { id: 'cards',   src: 'cards.png',  multiplier: 25, probability: 0.025 },
+            { id: 'seven',   src: 'seven.png',  multiplier: 40, probability: 0.01 }
         ];
 
         let balance = 30;
         let currentBet = 10;
-        let totalBet = 0, totalWon = 0, totalLost = 0;
+        let totalBet = 0;
+        let totalWon = 0;
+        let totalLost = 0;
         let spinning = false;
+        let gameOver = false;
+
+        const slotElements = [
+            document.getElementById('slot1'),
+            document.getElementById('slot2'),
+            document.getElementById('slot3')
+        ];
+        const balanceEl = document.getElementById('balance');
+        const totalBetEl = document.getElementById('totalBet');
+        const totalWonEl = document.getElementById('totalWon');
+        const totalLostEl = document.getElementById('totalLost');
+        const currentBetDisplay = document.getElementById('currentBetDisplay');
+        const gameMessageEl = document.getElementById('gameMessage');
+        const spinBtn = document.getElementById('spinBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const betButtons = document.querySelectorAll('.bet-btn');
 
         function getRandomSymbol() {
-            let r = Math.random();
-            let cum = 0;
-            for (let s of symbols) { cum += s.prob; if (r <= cum) return s; }
-            return symbols[0];
+            const rand = Math.random();
+            let cumulative = 0;
+            for (const symbol of SYMBOLS) {
+                cumulative += symbol.probability;
+                if (rand <= cumulative) return symbol;
+            }
+            return SYMBOLS[0];
         }
 
-        function updateGameUI() {
-            document.getElementById('balance').innerText = balance;
-            document.getElementById('totalBet').innerText = totalBet;
-            document.getElementById('totalWon').innerText = totalWon;
-            document.getElementById('totalLost').innerText = totalLost;
-            document.getElementById('currentBetDisplay').innerHTML = currentBet;
-            document.querySelectorAll('.bet-btn').forEach(btn => {
-                let val = parseInt(btn.dataset.bet);
-                if(val === currentBet) btn.classList.add('active');
-                else btn.classList.remove('active');
+        function generateSpinResult() {
+            return [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
+        }
+
+        function checkWin(symbols) {
+            const [s1, s2, s3] = symbols;
+            if (s1.id === s2.id && s2.id === s3.id) {
+                return s1.multiplier;
+            }
+            return 0;
+        }
+
+        function updateUI() {
+            balanceEl.textContent = balance;
+            totalBetEl.textContent = totalBet;
+            totalWonEl.textContent = totalWon;
+            totalLostEl.textContent = totalLost;
+            currentBetDisplay.textContent = currentBet;
+
+            betButtons.forEach(btn => {
+                const val = parseInt(btn.dataset.bet);
+                btn.classList.toggle('active', val === currentBet);
             });
-            let gameOver = balance < 5;
-            if(gameOver){
-                document.getElementById('spinBtn').style.display = 'none';
-                document.getElementById('restartBtn').style.display = 'block';
-                document.getElementById('gameMessage').innerHTML = '<div style="color:#f97316; font-weight:600;">Fim do jogo! A casa sempre vence no longo prazo.</div>';
+
+            gameOver = balance < 5;
+            
+            if (gameOver) {
+                spinBtn.style.display = 'none';
+                restartBtn.style.display = 'block';
+                if (!gameMessageEl.innerHTML.includes('VITÓRIA') && !gameMessageEl.innerHTML.includes('perdeu')) {
+                    gameMessageEl.innerHTML = '<div style="color:#f97316; font-weight:600;">💸 Fim do jogo! A casa sempre vence no longo prazo.</div>';
+                }
             } else {
-                document.getElementById('spinBtn').style.display = 'block';
-                document.getElementById('restartBtn').style.display = 'none';
+                spinBtn.style.display = 'block';
+                restartBtn.style.display = 'none';
+                spinBtn.disabled = (balance < currentBet) || spinning;
             }
-            document.getElementById('spinBtn').disabled = balance < currentBet;
         }
 
-        function setSlotImages(s1, s2, s3) {
-            document.getElementById('slot1').innerHTML = `<img src="${s1.src}" alt="${s1.name}">`;
-            document.getElementById('slot2').innerHTML = `<img src="${s2.src}" alt="${s2.name}">`;
-            document.getElementById('slot3').innerHTML = `<img src="${s3.src}" alt="${s3.name}">`;
-        }
-
-        function checkWin(s1, s2, s3) {
-            if (s1.name === s2.name && s2.name === s3.name && Math.random() < 0.08) {
-                let win = currentBet * s1.multiplier;
-                balance += win;
-                totalWon += win;
-                document.getElementById('gameMessage').innerHTML = `<div style="color:#fbbf24; font-weight:600;">🎉 GRANDE VITÓRIA! GANHOU R$ ${win}! 🎉</div>`;
-            } else if ((s1.name === s2.name || s2.name === s3.name || s1.name === s3.name) && Math.random() < 0.12) {
-                let win = Math.floor(currentBet * 1.5);
-                balance += win;
-                totalWon += win;
-                document.getElementById('gameMessage').innerHTML = `<div style="color:#fbbf24; font-weight:600;">✨ Boa! Ganhou R$ ${win}! ✨</div>`;
-            } else {
-                totalLost += currentBet;
-                document.getElementById('gameMessage').innerHTML = '<div style="color:#ef4444; font-weight:600;">❌ Você perdeu.</div>';
-            }
+        function renderSlots(symbols) {
+            if (gameOver) return;
+            symbols.forEach((symbol, index) => {
+                slotElements[index].innerHTML = `<img src="${symbol.src}" alt="${symbol.id}">`;
+            });
         }
 
         function spin() {
-            if (spinning || balance < currentBet) return;
+            if (spinning) return;
+            if (gameOver) {
+                gameMessageEl.innerHTML = '<div style="color:#f97316;">O jogo acabou. Clique em "Jogar novamente".</div>';
+                return;
+            }
+            if (balance < currentBet) {
+                gameMessageEl.innerHTML = '<div style="color:#ef4444;">Saldo insuficiente.</div>';
+                return;
+            }
+
             spinning = true;
+            spinBtn.disabled = true;
+
             balance -= currentBet;
             totalBet += currentBet;
-            updateGameUI();
-            
-            let spins = 0;
-            let interval = setInterval(() => {
-                let s1 = getRandomSymbol(), s2 = getRandomSymbol(), s3 = getRandomSymbol();
-                setSlotImages(s1, s2, s3);
-                spins++;
-                if (spins >= 12) {
+            updateUI();
+
+            let spinCount = 0;
+            const interval = setInterval(() => {
+                if (gameOver) {
                     clearInterval(interval);
-                    let r1 = getRandomSymbol(), r2 = getRandomSymbol(), r3 = getRandomSymbol();
-                    setSlotImages(r1, r2, r3);
-                    checkWin(r1, r2, r3);
                     spinning = false;
-                    updateGameUI();
+                    spinBtn.disabled = false;
+                    return;
+                }
+
+                const tempSymbols = generateSpinResult();
+                renderSlots(tempSymbols);
+                spinCount++;
+
+                if (spinCount >= 12) {
+                    clearInterval(interval);
+
+                    if (gameOver) {
+                        spinning = false;
+                        spinBtn.disabled = false;
+                        return;
+                    }
+
+                    const finalSymbols = generateSpinResult();
+                    renderSlots(finalSymbols);
+
+                    const multiplier = checkWin(finalSymbols);
+                    let winAmount = 0;
+
+                    if (multiplier > 0) {
+                        winAmount = currentBet * multiplier;
+                        balance += winAmount;
+                        totalWon += winAmount;
+                        gameMessageEl.innerHTML = `<div style="color:#fbbf24; font-weight:600;">🎉 VITÓRIA! Ganhou R$ ${winAmount} (x${multiplier}) 🎉</div>`;
+                    } else {
+                        totalLost += currentBet;
+                        gameMessageEl.innerHTML = '<div style="color:#ef4444; font-weight:600;">❌ Você perdeu.</div>';
+                    }
+
+                    updateUI();
+                    spinning = false;
+                    spinBtn.disabled = false;
+
+                    if (balance < 5) {
+                        updateUI();
+                    }
                 }
             }, 55);
         }
 
-        function restart() {
+        function restartGame() {
+            spinning = false;
+            gameOver = false;
+            
             balance = 30;
             currentBet = 10;
-            totalBet = 0; totalWon = 0; totalLost = 0;
-            setSlotImages(symbols[0], symbols[0], symbols[0]);
-            document.getElementById('gameMessage').innerHTML = '';
-            updateGameUI();
+            totalBet = 0;
+            totalWon = 0;
+            totalLost = 0;
+            spinBtn.disabled = false;
+
+            const defaultSymbol = SYMBOLS[0];
+            renderSlots([defaultSymbol, defaultSymbol, defaultSymbol]);
+            gameMessageEl.innerHTML = '';
+            updateUI();
         }
 
-        document.getElementById('spinBtn').addEventListener('click', spin);
-        document.getElementById('restartBtn').addEventListener('click', restart);
-        document.querySelectorAll('.bet-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                let val = parseInt(btn.dataset.bet);
-                if (val <= balance) currentBet = val;
-                updateGameUI();
+        betButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (spinning || gameOver) return;
+                const value = parseInt(this.dataset.bet);
+                if (value <= balance) {
+                    currentBet = value;
+                    updateUI();
+                } else {
+                    gameMessageEl.innerHTML = `<div style="color:#f59e0b;">Saldo insuficiente para R$ ${value}.</div>`;
+                }
             });
         });
-        updateGameUI();
+
+        spinBtn.addEventListener('click', spin);
+        restartBtn.addEventListener('click', restartGame);
+
+        const initialSymbol = SYMBOLS[0];
+        renderSlots([initialSymbol, initialSymbol, initialSymbol]);
+        updateUI();
     </script>
 </body>
 </html>
