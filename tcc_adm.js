@@ -1,21 +1,21 @@
 // símbolos
 const SYMBOLS = [
-    { id: 'banana',  src: 'banana.png', multiplier: 2,  probability: 0.35 },
-    { id: 'fruit',   src: 'fruit.png',  multiplier: 3,  probability: 0.25 },
-    { id: 'grape',   src: 'grape.png',  multiplier: 5,  probability: 0.18 },
-    { id: 'money',   src: 'money.png',  multiplier: 8,  probability: 0.12 },
-    { id: 'bag',     src: 'bag.png',    multiplier: 12, probability: 0.06 },
-    { id: 'cards',   src: 'cards.png',  multiplier: 25, probability: 0.03 },
-    { id: 'seven',   src: 'seven.png',  multiplier: 40, probability: 0.01 }
+    { id: 'banana',  src: 'banana.png', multiplier: 2,  probability: 0.55 },
+    { id: 'fruit',   src: 'fruit.png',  multiplier: 3,  probability: 0.20 },
+    { id: 'grape',   src: 'grape.png',  multiplier: 5,  probability: 0.10 },
+    { id: 'money',   src: 'money.png',  multiplier: 8,  probability: 0.07 },
+    { id: 'bag',     src: 'bag.png',    multiplier: 12, probability: 0.04 },
+    { id: 'cards',   src: 'cards.png',  multiplier: 25, probability: 0.025 },
+    { id: 'seven',   src: 'seven.png',  multiplier: 40, probability: 0.015 }
 ];
 
 // estado do jogo
-let balance = 30;       // saldo inicial
-let currentBet = 10;    // aposta selecionada
-let totalBet = 0;       // total apostado (acumulado)
-let totalWon = 0;       // total ganho (acumulado)
-let totalLost = 0;      // total perdido (acumulado)
-let spinning = false;   // trava para evitar múltiplos giros
+let balance = 30;           // saldo inicial
+let currentBet = 10;        // aposta selecionada
+let totalBet = 0;           // total apostado (acumulado)
+let totalWon = 0;           // total ganho (acumulado)
+let totalLost = 0;          // total perdido (acumulado)
+let spinning = false;       // trava para evitar múltiplos giros
 
 // elementos dom
 const slotElements = [
@@ -56,7 +56,7 @@ function generateSpinResult() {
 // retorna o multiplicador ou 0 se perdeu
 function checkWin(symbols) {
     const [s1, s2, s3] = symbols;
-    // ganha se os três forem exatamente o mesmo símbolo
+    // só ganha se os três forem exatamente o mesmo símbolo
     if (s1.id === s2.id && s2.id === s3.id) {
         return s1.multiplier;   // multiplicador do símbolo
     }
@@ -65,7 +65,7 @@ function checkWin(symbols) {
 
 // autualiza a interface
 function updateUI() {
-    // Atualiza os valores numéricos
+    // atualiza os valores numéricos
     balanceEl.textContent = balance;
     totalBetEl.textContent = totalBet;
     totalWonEl.textContent = totalWon;
@@ -78,7 +78,7 @@ function updateUI() {
         btn.classList.toggle('active', val === currentBet);
     });
 
-    // gerencia fim de jogo (saldo < 5)
+    // gerencia estado de fim de jogo (saldo < 5)
     const gameOver = balance < 5;
     if (gameOver) {
         spinBtn.style.display = 'none';
@@ -172,7 +172,7 @@ function restartGame() {
     spinning = false;
     spinBtn.disabled = false;
 
-    // reseta slots com banana (símbolo padrão)
+    // reseta os slots com banana (símbolo padrão)
     const defaultSymbol = SYMBOLS[0];
     renderSlots([defaultSymbol, defaultSymbol, defaultSymbol]);
 
