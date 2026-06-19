@@ -159,6 +159,7 @@
             text-align: center;
         }
 
+        /* ========== RESPONSIVO ========== */
         /* Telas médias (tablets) */
         @media (max-width: 900px) {
             .stats-col {
@@ -278,7 +279,7 @@
                 margin-top: 12px;
             }
 
-            /* Ajuste do cabeçalho da simulação para ficar igual ao principal */
+            /* Ajuste do cabeçalho da simulação para mobile */
             .navbar .logo {
                 flex-direction: row;
                 gap: 10px;
@@ -294,7 +295,7 @@
                 font-size: 0.65rem;
             }
             .nav-links {
-                display: none; /* esconde o link "Voltar" */
+                display: none; /* esconde o link "Voltar" no mobile */
             }
         }
 
@@ -336,6 +337,7 @@
                 </div>
             </a>
             <!-- Botão "Voltar" REMOVIDO -->
+            <!-- A navegação volta é feita clicando no logo -->
         </div>
     </header>
 
@@ -410,9 +412,14 @@
             <p style="margin-top: 5px; font-size: 0.7rem;">Orientador: Prof. Éder Jonas Oliveira de Moraes</p>
         </div>
     </footer>
-    
-    <script>
 
+    <!-- JavaScript da simulação -->
+    <script>
+        // ============================================================
+        //  SIMULAÇÃO "JOGO DO TIGRINHO" - CORRIGIDA E AJUSTADA
+        // ============================================================
+
+        // 1. CONFIGURAÇÃO DOS SÍMBOLOS
         const SYMBOLS = [
             { id: 'banana',  src: 'banana.png', multiplier: 2,  probability: 0.45 },
             { id: 'fruit',   src: 'fruit.png',  multiplier: 3,  probability: 0.25 },
@@ -423,6 +430,7 @@
             { id: 'seven',   src: 'seven.png',  multiplier: 40, probability: 0.01 }
         ];
 
+        // 2. ESTADO DO JOGO
         let balance = 30;
         let currentBet = 10;
         let totalBet = 0;
@@ -431,6 +439,7 @@
         let spinning = false;
         let gameOver = false;
 
+        // 3. REFERÊNCIAS DOM
         const slotElements = [
             document.getElementById('slot1'),
             document.getElementById('slot2'),
@@ -446,6 +455,7 @@
         const restartBtn = document.getElementById('restartBtn');
         const betButtons = document.querySelectorAll('.bet-btn');
 
+        // 4. FUNÇÕES AUXILIARES
         function getRandomSymbol() {
             const rand = Math.random();
             let cumulative = 0;
@@ -468,6 +478,7 @@
             return 0;
         }
 
+        // 5. INTERFACE
         function updateUI() {
             balanceEl.textContent = balance;
             totalBetEl.textContent = totalBet;
@@ -502,6 +513,7 @@
             });
         }
 
+        // 6. GIRAR
         function spin() {
             if (spinning) return;
             if (gameOver) {
@@ -569,6 +581,7 @@
             }, 55);
         }
 
+        // 7. REINICIAR
         function restartGame() {
             spinning = false;
             gameOver = false;
@@ -580,31 +593,4 @@
             totalLost = 0;
             spinBtn.disabled = false;
 
-            const defaultSymbol = SYMBOLS[0];
-            renderSlots([defaultSymbol, defaultSymbol, defaultSymbol]);
-            gameMessageEl.innerHTML = '';
-            updateUI();
-        }
-        
-        betButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                if (spinning || gameOver) return;
-                const value = parseInt(this.dataset.bet);
-                if (value <= balance) {
-                    currentBet = value;
-                    updateUI();
-                } else {
-                    gameMessageEl.innerHTML = `<div style="color:#f59e0b;">Saldo insuficiente para R$ ${value}.</div>`;
-                }
-            });
-        });
-
-        spinBtn.addEventListener('click', spin);
-        restartBtn.addEventListener('click', restartGame);
-        
-        const initialSymbol = SYMBOLS[0];
-        renderSlots([initialSymbol, initialSymbol, initialSymbol]);
-        updateUI();
-    </script>
-</body>
-</html>
+            const
