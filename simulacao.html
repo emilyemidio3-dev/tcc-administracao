@@ -325,7 +325,7 @@
 <body>
     <header>
         <div class="container navbar">
-
+            <!-- Logo com link para a página inicial -->
             <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 14px;">
                 <div class="logo">
                     <img src="tiger.png" alt="Tigre" class="logo-img" onerror="this.style.display='none'" />
@@ -335,7 +335,7 @@
                     </div>
                 </div>
             </a>
-            
+            <!-- Botão "Voltar" REMOVIDO -->
         </div>
     </header>
 
@@ -344,8 +344,9 @@
             <h2 class="section-title">Demonstração Experimental: "Jogo do Tigrinho"</h2>
             <p class="section-sub">Esta simulação mostra na prática como a casa sempre leva vantagem no longo prazo. Observe como o saldo tende a diminuir.</p>
 
+            <!-- Wrapper com duas colunas -->
             <div class="simulation-wrapper">
-                
+                <!-- Coluna esquerda: estatísticas -->
                 <div class="stats-col">
                     <div class="stat-item">
                         <i class="fas fa-wallet"></i>
@@ -368,7 +369,8 @@
                         <span class="stat-value" id="totalLost">0</span>
                     </div>
                 </div>
-                
+
+                <!-- Coluna direita: jogo -->
                 <div class="game-col">
                     <div class="slots">
                         <div class="slot" id="slot1"><img src="banana.png" alt="?" /></div>
@@ -408,7 +410,7 @@
             <p style="margin-top: 5px; font-size: 0.7rem;">Orientador: Prof. Éder Jonas Oliveira de Moraes</p>
         </div>
     </footer>
-
+    
     <script>
 
         const SYMBOLS = [
@@ -583,7 +585,7 @@
             gameMessageEl.innerHTML = '';
             updateUI();
         }
-
+        
         betButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 if (spinning || gameOver) return;
@@ -599,7 +601,7 @@
 
         spinBtn.addEventListener('click', spin);
         restartBtn.addEventListener('click', restartGame);
-
+        
         const initialSymbol = SYMBOLS[0];
         renderSlots([initialSymbol, initialSymbol, initialSymbol]);
         updateUI();
