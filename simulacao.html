@@ -593,4 +593,33 @@
             totalLost = 0;
             spinBtn.disabled = false;
 
-            const
+            const defaultSymbol = SYMBOLS[0];
+            renderSlots([defaultSymbol, defaultSymbol, defaultSymbol]);
+            gameMessageEl.innerHTML = '';
+            updateUI();
+        }
+
+        // 8. EVENTOS
+        betButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (spinning || gameOver) return;
+                const value = parseInt(this.dataset.bet);
+                if (value <= balance) {
+                    currentBet = value;
+                    updateUI();
+                } else {
+                    gameMessageEl.innerHTML = `<div style="color:#f59e0b;">Saldo insuficiente para R$ ${value}.</div>`;
+                }
+            });
+        });
+
+        spinBtn.addEventListener('click', spin);
+        restartBtn.addEventListener('click', restartGame);
+
+        // 9. INICIALIZAÇÃO
+        const initialSymbol = SYMBOLS[0];
+        renderSlots([initialSymbol, initialSymbol, initialSymbol]);
+        updateUI();
+    </script>
+</body>
+</html>
