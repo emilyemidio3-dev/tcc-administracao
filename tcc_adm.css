@@ -87,7 +87,7 @@ header {
 
 .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 28px;
     flex-wrap: wrap;
 }
 
