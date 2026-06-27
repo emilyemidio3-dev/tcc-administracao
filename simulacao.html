@@ -468,7 +468,7 @@
             { id: 'cards',   src: 'cards.png',  multiplier: 25, probability: 0.015 },
             { id: 'seven',   src: 'seven.png',  multiplier: 40, probability: 0.005 }
         ];
-
+        
         let balance = 30;
         let currentBet = 10;
         let totalBet = 0;
@@ -476,7 +476,7 @@
         let totalLost = 0;
         let spinning = false;
         let gameOver = false;
-
+        
         const slotElements = [
             document.getElementById('slot1'),
             document.getElementById('slot2'),
@@ -526,15 +526,16 @@
                 btn.classList.toggle('active', val === currentBet);
             });
 
-            // Atualiza o estado gameOver ANTES de decidir o que mostrar
+            // Atualiza o estado gameOver
             const wasGameOver = gameOver;
             gameOver = balance < 5;
             
             if (gameOver) {
                 spinBtn.style.display = 'none';
                 restartBtn.style.display = 'block';
-                // Só mostra a mensagem de fim se não tiver uma mensagem de vitória/derrota mais importante
-                if (!gameMessageEl.innerHTML.includes('VITÓRIA') && !gameMessageEl.innerHTML.includes('perdeu')) {
+                // Só mostra a mensagem de fim se NÃO houver uma mensagem de vitória/derrota mais importante
+                const msg = gameMessageEl.innerHTML;
+                if (!msg.includes('VITÓRIA') && !msg.includes('perdeu') && !msg.includes('🎉') && !msg.includes('❌')) {
                     gameMessageEl.innerHTML = '<div style="color:#f97316; font-weight:600;">💸 Fim do jogo! A casa sempre vence no longo prazo.</div>';
                 }
             } else {
@@ -544,9 +545,8 @@
             }
         }
 
-        // Função para exibir os símbolos SEMPRE (mesmo se gameOver)
+        // Função para exibir os símbolos SEMPRE
         function renderSlots(symbols) {
-            // Não impede a exibição mesmo se gameOver = true
             symbols.forEach((symbol, index) => {
                 slotElements[index].innerHTML = `<img src="${symbol.src}" alt="${symbol.id}">`;
             });
@@ -573,14 +573,7 @@
 
             let spinCount = 0;
             const interval = setInterval(() => {
-                // Se o jogo acabou durante a animação, interrompe (mas só se não for a última jogada)
-                if (gameOver && spinCount > 0) {
-                    clearInterval(interval);
-                    spinning = false;
-                    spinBtn.disabled = false;
-                    return;
-                }
-
+                // Gera símbolos temporários para a animação
                 const tempSymbols = generateSpinResult();
                 renderSlots(tempSymbols);
                 spinCount++;
@@ -588,7 +581,6 @@
                 if (spinCount >= 12) {
                     clearInterval(interval);
 
-                    // Sorteio final (sempre executa, independente do gameOver)
                     const finalSymbols = generateSpinResult();
                     renderSlots(finalSymbols);
 
@@ -621,15 +613,13 @@
                         gameMessageEl.innerHTML = '<div style="color:#ef4444; font-weight:600;">❌ Você perdeu.</div>';
                     }
 
-                    // Atualiza a interface (isso vai detectar se o jogo acabou)
+                    // Atualiza a interface (vai detectar se gameOver = true)
                     updateUI();
                     spinning = false;
                     spinBtn.disabled = false;
 
-                    // Se o jogo acabou, força a exibição da mensagem de fim
-                    if (balance < 5) {
-                        updateUI();
-                    }
+                    // Se o jogo acabou, a mensagem de fim já foi mostrada pelo updateUI()
+                    // Mas se ainda não acabou, está tudo certo
                 }
             }, 55);
         }
