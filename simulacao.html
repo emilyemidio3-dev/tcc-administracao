@@ -324,7 +324,7 @@
             }
 
             .hamburger {
-                display: flex;
+                display: flex !important;
             }
         }
 
@@ -490,7 +490,7 @@
 
     <script>
         // ============================================================
-        //  SIMULAÇÃO "JOGO DO TIGRINHO" - CORRIGIDA
+        //  SIMULAÇÃO "JOGO DO TIGRINHO"
         // ============================================================
 
         const SYMBOLS = [
@@ -689,33 +689,35 @@
         updateUI();
 
         // ========== MENU HAMBÚRGUER ==========
-        const hamburgerBtn = document.getElementById('hamburgerBtn');
-        const sideMenu = document.getElementById('sideMenu');
-        const menuOverlay = document.getElementById('menuOverlay');
+        document.addEventListener('DOMContentLoaded', function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const sideMenu = document.getElementById('sideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
 
-        function toggleMenu() {
-            hamburgerBtn.classList.toggle('active');
-            sideMenu.classList.toggle('open');
-            menuOverlay.classList.toggle('active');
-            document.body.style.overflow = sideMenu.classList.contains('open') ? 'hidden' : '';
-        }
+            function toggleMenu() {
+                hamburgerBtn.classList.toggle('active');
+                sideMenu.classList.toggle('open');
+                menuOverlay.classList.toggle('active');
+                document.body.style.overflow = sideMenu.classList.contains('open') ? 'hidden' : '';
+            }
 
-        function closeMenu() {
-            hamburgerBtn.classList.remove('active');
-            sideMenu.classList.remove('open');
-            menuOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
+            function closeMenu() {
+                hamburgerBtn.classList.remove('active');
+                sideMenu.classList.remove('open');
+                menuOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
 
-        if (hamburgerBtn) {
-            hamburgerBtn.addEventListener('click', toggleMenu);
-        }
-        if (menuOverlay) {
-            menuOverlay.addEventListener('click', closeMenu);
-        }
+            if (hamburgerBtn) {
+                hamburgerBtn.addEventListener('click', toggleMenu);
+            }
+            if (menuOverlay) {
+                menuOverlay.addEventListener('click', closeMenu);
+            }
 
-        document.querySelectorAll('.side-menu a').forEach(link => {
-            link.addEventListener('click', closeMenu);
+            document.querySelectorAll('.side-menu a').forEach(link => {
+                link.addEventListener('click', closeMenu);
+            });
         });
     </script>
 </body>
