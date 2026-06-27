@@ -52,3 +52,33 @@ function updateHouseEdge() {
 }
 oddSlider.addEventListener('input', updateHouseEdge);
 updateHouseEdge();
+
+// ========== MENU HAMBÚRGUER ==========
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const sideMenu = document.getElementById('sideMenu');
+const menuOverlay = document.getElementById('menuOverlay');
+
+function toggleMenu() {
+    hamburgerBtn.classList.toggle('active');
+    sideMenu.classList.toggle('open');
+    menuOverlay.classList.toggle('active');
+    document.body.style.overflow = sideMenu.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+    hamburgerBtn.classList.remove('active');
+    sideMenu.classList.remove('open');
+    menuOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+if (hamburgerBtn) {
+    hamburgerBtn.addEventListener('click', toggleMenu);
+}
+if (menuOverlay) {
+    menuOverlay.addEventListener('click', closeMenu);
+}
+
+document.querySelectorAll('.side-menu a').forEach(link => {
+    link.addEventListener('click', closeMenu);
+});
