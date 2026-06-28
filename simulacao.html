@@ -269,7 +269,7 @@
                 margin-top: 12px;
             }
 
-            /* CABEÇALHO IGUAL AO INDEX */
+            /* Cabeçalho igual ao index */
             header {
                 position: sticky;
                 padding: 0;
@@ -279,21 +279,21 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 12px 0;
+                padding: 0;
                 gap: 10px;
-                flex-wrap: nowrap;
+                height: 100%;
             }
 
             .logo {
                 flex-direction: row;
-                gap: 10px;
+                gap: 8px;
                 align-items: center;
                 flex-shrink: 0;
             }
 
             .logo-img {
-                width: 40px;
-                height: 40px;
+                width: 36px;
+                height: 36px;
                 flex-shrink: 0;
             }
 
@@ -302,7 +302,7 @@
             }
 
             .logo-text h1 {
-                font-size: 1.1rem;
+                font-size: 1rem;
                 line-height: 1.1;
                 font-weight: 800;
                 font-family: 'Playfair Display', serif;
@@ -313,7 +313,7 @@
             }
 
             .logo-text p {
-                font-size: 0.6rem;
+                font-size: 0.55rem;
                 line-height: 1.1;
                 margin-top: 1px;
                 letter-spacing: 0.3px;
@@ -324,7 +324,7 @@
                 text-decoration: none;
                 display: flex;
                 align-items: center;
-                gap: 10px;
+                gap: 8px;
             }
 
             .hamburger {
@@ -356,14 +356,14 @@
             }
 
             .logo-img {
-                width: 32px;
-                height: 32px;
+                width: 30px;
+                height: 30px;
             }
             .logo-text h1 {
-                font-size: 0.95rem;
+                font-size: 0.85rem;
             }
             .logo-text p {
-                font-size: 0.5rem;
+                font-size: 0.45rem;
             }
 
             #demo {
@@ -395,7 +395,7 @@
 <body>
     <header>
         <div class="container navbar">
-            <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 8px;">
                 <div class="logo">
                     <img src="tiger.png" alt="Tigre" class="logo-img" onerror="this.style.display='none'" />
                     <div class="logo-text">
@@ -495,6 +495,10 @@
     </footer>
 
     <script>
+        // ============================================================
+        //  SIMULAÇÃO "JOGO DO TIGRINHO"
+        // ============================================================
+
         const SYMBOLS = [
             { id: 'banana',  src: 'banana.png', multiplier: 2,  probability: 0.55 },
             { id: 'fruit',   src: 'fruit.png',  multiplier: 3,  probability: 0.25 },
@@ -697,17 +701,24 @@
             const menuOverlay = document.getElementById('menuOverlay');
 
             function toggleMenu() {
+                const isOpen = sideMenu.classList.contains('open');
+                
                 hamburgerBtn.classList.toggle('active');
                 sideMenu.classList.toggle('open');
                 menuOverlay.classList.toggle('active');
-                document.body.style.overflow = sideMenu.classList.contains('open') ? 'hidden' : '';
+                
+                if (!isOpen) {
+                    document.body.classList.add('menu-open');
+                } else {
+                    document.body.classList.remove('menu-open');
+                }
             }
 
             function closeMenu() {
                 hamburgerBtn.classList.remove('active');
                 sideMenu.classList.remove('open');
                 menuOverlay.classList.remove('active');
-                document.body.style.overflow = '';
+                document.body.classList.remove('menu-open');
             }
 
             if (hamburgerBtn) {
@@ -717,9 +728,21 @@
                 menuOverlay.addEventListener('click', closeMenu);
             }
 
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 769) {
+                    closeMenu();
+                }
+            });
+
             document.querySelectorAll('.side-menu a').forEach(link => {
                 link.addEventListener('click', closeMenu);
             });
+
+            if (sideMenu) {
+                sideMenu.addEventListener('touchmove', function(e) {
+                    e.stopPropagation();
+                }, { passive: false });
+            }
         });
     </script>
 </body>
