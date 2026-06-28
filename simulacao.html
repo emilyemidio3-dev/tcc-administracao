@@ -269,28 +269,32 @@
                 margin-top: 12px;
             }
 
+            /* CABEÇALHO IGUAL AO INDEX */
             header {
-                position: relative;
+                position: sticky;
                 padding: 0;
             }
 
             .navbar {
-                flex-direction: row;
+                display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 16px 0 12px;
+                padding: 12px 0;
                 gap: 10px;
+                flex-wrap: nowrap;
             }
 
             .logo {
                 flex-direction: row;
                 gap: 10px;
                 align-items: center;
+                flex-shrink: 0;
             }
 
             .logo-img {
                 width: 40px;
                 height: 40px;
+                flex-shrink: 0;
             }
 
             .logo-text {
@@ -298,8 +302,8 @@
             }
 
             .logo-text h1 {
-                font-size: 1.2rem;
-                line-height: 1;
+                font-size: 1.1rem;
+                line-height: 1.1;
                 font-weight: 800;
                 font-family: 'Playfair Display', serif;
                 background: linear-gradient(135deg, #FFFFFF, #f97316);
@@ -309,9 +313,9 @@
             }
 
             .logo-text p {
-                font-size: 0.65rem;
-                line-height: 1.2;
-                margin-top: 2px;
+                font-size: 0.6rem;
+                line-height: 1.1;
+                margin-top: 1px;
                 letter-spacing: 0.3px;
                 color: #f97316;
             }
@@ -325,6 +329,8 @@
 
             .hamburger {
                 display: flex !important;
+                flex-shrink: 0;
+                margin-left: auto;
             }
         }
 
@@ -354,10 +360,10 @@
                 height: 32px;
             }
             .logo-text h1 {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
             .logo-text p {
-                font-size: 0.55rem;
+                font-size: 0.5rem;
             }
 
             #demo {
@@ -389,7 +395,7 @@
 <body>
     <header>
         <div class="container navbar">
-            <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 14px;">
+            <a href="index.html" style="text-decoration: none; display: flex; align-items: center; gap: 10px;">
                 <div class="logo">
                     <img src="tiger.png" alt="Tigre" class="logo-img" onerror="this.style.display='none'" />
                     <div class="logo-text">
@@ -489,10 +495,6 @@
     </footer>
 
     <script>
-        // ============================================================
-        //  SIMULAÇÃO "JOGO DO TIGRINHO"
-        // ============================================================
-
         const SYMBOLS = [
             { id: 'banana',  src: 'banana.png', multiplier: 2,  probability: 0.55 },
             { id: 'fruit',   src: 'fruit.png',  multiplier: 3,  probability: 0.25 },
