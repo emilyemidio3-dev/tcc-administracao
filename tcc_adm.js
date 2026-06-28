@@ -60,17 +60,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuOverlay = document.getElementById('menuOverlay');
 
     function toggleMenu() {
+        const isOpen = sideMenu.classList.contains('open');
+        
+        // Alterna classes
         hamburgerBtn.classList.toggle('active');
         sideMenu.classList.toggle('open');
         menuOverlay.classList.toggle('active');
-        document.body.style.overflow = sideMenu.classList.contains('open') ? 'hidden' : '';
+        
+        // Bloqueia/desbloqueia rolagem do body
+        if (!isOpen) {
+            document.body.classList.add('menu-open');
+        } else {
+            document.body.classList.remove('menu-open');
+        }
     }
 
     function closeMenu() {
         hamburgerBtn.classList.remove('active');
         sideMenu.classList.remove('open');
         menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+        document.body.classList.remove('menu-open');
     }
 
     if (hamburgerBtn) {
@@ -80,7 +89,22 @@ document.addEventListener('DOMContentLoaded', function() {
         menuOverlay.addEventListener('click', closeMenu);
     }
 
+    // Fecha ao redimensionar para desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 769) {
+            closeMenu();
+        }
+    });
+
+    // Fecha ao clicar nos links do menu
     document.querySelectorAll('.side-menu a').forEach(link => {
         link.addEventListener('click', closeMenu);
     });
+
+    // Previne scroll do menu lateral de vazar para o body
+    if (sideMenu) {
+        sideMenu.addEventListener('touchmove', function(e) {
+            e.stopPropagation();
+        }, { passive: false });
+    }
 });
