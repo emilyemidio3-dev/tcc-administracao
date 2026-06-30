@@ -1,219 +1,124 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JOGO JUSTO | TCC</title>
-    
-    <!-- FONTES -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="tcc_adm.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>TCC | Técnico Administração</title>
+    <link rel="icon" type="image/x-icon" href="tigre.ico" />
+    <link rel="shortcut icon" href="tigre.ico" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="tcc_adm.css" />
 </head>
 <body>
-
-    <!-- ====== HEADER / NAVBAR ====== -->
     <header>
-        <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <img src="logo.png" alt="Logo" class="logo-img">
-                    <div class="logo-text">
-                        <h1>JOGO JUSTO</h1>
-                        <p>TCC</p>
-                    </div>
+        <div class="container navbar">
+            <div class="logo">
+                <img src="tiger.png" alt="Tigre" class="logo-img" onerror="this.style.display='none'" />
+                <div class="logo-text">
+                    <h1>JOGO JUSTO | TCC</h1>
+                    <p>Impactos Socioeconômicos das Apostas Online</p>
                 </div>
-
-                <!-- Botão Menu Mobile -->
-                <button class="menu-toggle" id="menuToggle">
-                    <span class="icon">☰</span>
-                </button>
-
-                <div class="nav-links">
-                    <a href="#home">Início</a>
-                    <a href="#simulador">Simulador</a>
-                    <a href="#estatisticas">Estatísticas</a>
-                    <a href="#medidas">Medidas</a>
-                    <a href="#sobre">Sobre</a>
-                </div>
-            </nav>
+            </div>
+            
+            <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <div class="nav-links">
+                <a href="simulacao.html">Simulação</a>
+            </div>
         </div>
     </header>
 
-    <div class="menu-overlay"></div>
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="side-menu" id="sideMenu">
+        <a href="simulacao.html">
+            <i class="fas fa-gamepad"></i>
+            Simulação
+        </a>
+    </div>
 
-    <!-- ====== HERO ====== -->
-    <section id="home" class="hero">
+    <section class="hero">
         <div class="container">
-            <h2>Entenda como a <span>vantagem da casa</span> funciona na prática</h2>
-            <p>Uma simulação acadêmica para demonstrar o comportamento das plataformas de apostas</p>
+            <h2>Apostas Online no Brasil: <span>Entretenimento ou Risco Social?</span></h2>
+            <p>R$ 20 bilhões movimentados por mês. 24 milhões de apostadores. R$ 3 bilhões do Bolsa Família destinados às bets em apenas um mês. Prejuízo anual estimado de R$ 38,8 bilhões.</p>
         </div>
     </section>
 
-    <!-- ====== ESTATÍSTICAS ====== -->
-    <section id="estatisticas">
-        <div class="container">
-            <h2 class="section-title">📊 Estatísticas do Mercado</h2>
-            <p class="section-sub">Dados sobre o comportamento das plataformas de apostas</p>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">85%</div>
-                    <div class="stat-label">Perdem dinheiro a longo prazo</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">2.5x</div>
-                    <div class="stat-label">Mais chance no início</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">30%</div>
-                    <div class="stat-label">Continuam após perder</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">12%</div>
-                    <div class="stat-label">Retorno médio</div>
-                </div>
-            </div>
+    <div class="container" id="impactos">
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-number" data-target="20">R$ 0 bi</div><div class="stat-label">movimentados por mês no Brasil</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="24">0 mi</div><div class="stat-label">apostadores regulares no Brasil</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="38.8">R$ 0 bi</div><div class="stat-label">prejuízos anuais com apostas</div></div>
+            <div class="stat-card"><div class="stat-number" data-target="84.7">0%</div><div class="stat-label">acham as apostas prejudiciais</div></div>
         </div>
-    </section>
+    </div>
 
-    <!-- ====== SIMULADOR ====== -->
-    <section id="simulador">
+    <section id="matematica">
         <div class="container">
-            <h2 class="section-title">🎰 Simulador de Apostas</h2>
-            <p class="section-sub">Entenda como a sensação inicial de ganho leva à perda</p>
-            
-            <div class="simulator-card">
-                <h3>💰 Simulação Interativa</h3>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
-                    <div>
-                        <p style="color: #9ca3af; font-size: 0.85rem;">Saldo</p>
-                        <p id="saldo" style="font-size: 1.8rem; font-weight: 700; color: #4ade80;">R$ 100.00</p>
-                    </div>
-                    <div>
-                        <p style="color: #9ca3af; font-size: 0.85rem;">Rodada</p>
-                        <p id="rodada" style="font-size: 1.8rem; font-weight: 700; color: #f97316;">0 de 30</p>
-                    </div>
-                    <div>
-                        <p style="color: #9ca3af; font-size: 0.85rem;">Resultado</p>
-                        <p id="resultado" style="font-size: 1.2rem; font-weight: 600;">-</p>
-                    </div>
-                    <div>
-                        <p style="color: #9ca3af; font-size: 0.85rem;">Fase</p>
-                        <p id="fase" style="font-size: 1.2rem; font-weight: 600; color: #f97316;">-</p>
-                    </div>
-                </div>
-
-                <div style="margin: 20px 0;">
-                    <p style="color: #9ca3af; font-size: 0.85rem;">Progresso</p>
-                    <div class="progress-bar-bg">
-                        <div id="edgeBar" style="width: 0%;"></div>
-                    </div>
-                </div>
-
-                <div>
-                    <label for="betAmount" style="color: #9ca3af;">Valor da aposta:</label>
-                    <input type="number" id="betAmount" value="10" min="1" max="100" step="0.5" 
-                           style="width: 100%; padding: 12px; background: #1a1a1f; border: 1px solid #2a2a30; border-radius: 12px; color: #ECECEC; margin: 10px 0;">
-                </div>
-
-                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-                    <button id="rollButton" style="padding: 14px 40px; background: linear-gradient(135deg, #f97316, #faa53d); border: none; border-radius: 12px; color: #fff; font-weight: 700; cursor: pointer; flex: 1; min-width: 140px;">
-                        🎲 Apostar
-                    </button>
-                    <button id="resetButton" style="padding: 14px 30px; background: #1a1a1f; border: 1px solid #2a2a30; border-radius: 12px; color: #ECECEC; font-weight: 600; cursor: pointer; flex: 1; min-width: 140px;">
-                        🔄 Reiniciar
-                    </button>
-                </div>
-
-                <div style="margin-top: 20px; display: flex; gap: 16px; justify-content: center; font-size: 0.85rem; flex-wrap: wrap;">
-                    <span style="display: flex; align-items: center; gap: 6px;">
-                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #4ade80;"></span>
-                        Confiança
-                    </span>
-                    <span style="display: flex; align-items: center; gap: 6px;">
-                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #fbbf24;"></span>
-                        Equilíbrio
-                    </span>
-                    <span style="display: flex; align-items: center; gap: 6px;">
-                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ef4444;"></span>
-                        Desvantagem
-                    </span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== MEDIDAS ====== -->
-    <section id="medidas">
-        <div class="container">
-            <h2 class="section-title">🛡️ Medidas de Proteção</h2>
-            <p class="section-sub">Como se proteger dos efeitos da vantagem da casa</p>
-            
-            <div class="card-medidas">
-                <h3>📌 Estabeleça Limites</h3>
-                <ul>
-                    <li>Defina um valor máximo para apostar por dia</li>
-                    <li>Estabeleça um limite de perda diário</li>
-                    <li>Nunca aposte mais do que pode perder</li>
-                </ul>
-            </div>
-
-            <div class="card-medidas">
-                <h3>⏰ Controle de Tempo</h3>
-                <ul>
-                    <li>Defina um tempo limite para suas sessões</li>
-                    <li>Faça pausas regulares</li>
-                    <li>Evite apostar quando estiver cansado</li>
-                </ul>
-            </div>
-
-            <div class="card-medidas">
-                <h3>🧠 Conscientização</h3>
-                <ul>
-                    <li>Entenda que a casa sempre tem vantagem</li>
-                    <li>Reconheça os sinais de comportamento de risco</li>
-                    <li>Busque ajuda se perder o controle</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- ====== SOBRE ====== -->
-    <section id="sobre">
-        <div class="container">
-            <h2 class="section-title">📚 Sobre o Projeto</h2>
-            <p class="section-sub">Trabalho acadêmico para o TCC sobre o comportamento das plataformas de apostas</p>
-            
+            <h2 class="section-title">Como a Casa Sempre Vence? A Matemática do Vício</h2>
             <div class="highlight-box">
-                <h3 style="color: #f97316;">🎯 Objetivo</h3>
-                <p>Demonstrar como as plataformas de apostas utilizam a sensação inicial de ganho para incentivar os usuários a continuarem apostando.</p>
-                
-                <h3 style="color: #f97316; margin-top: 20px;">🔬 Fases da Simulação</h3>
-                <ul style="list-style: none; margin-top: 12px;">
-                    <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <strong style="color: #4ade80;">Confiança:</strong> Altas probabilidades de vitória
-                    </li>
-                    <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-                        <strong style="color: #fbbf24;">Equilíbrio:</strong> Resultados mistos
-                    </li>
-                    <li style="padding: 8px 0;">
-                        <strong style="color: #ef4444;">Desvantagem:</strong> Baixas probabilidades
-                    </li>
-                </ul>
+                <p><strong>As bets utilizam princípios matemáticos de probabilidade e valor esperado para garantir lucro no longo prazo.</strong> As odds são ajustadas para que o pagamento ao apostador seja sempre inferior ao valor justo.</p>
+                <p style="margin-top: 12px;">Exemplo: em um evento com 50% de chance, a odd justa seria 2.0. As casas oferecem ~1.90. Essa diferença é a <strong style="color: #f97316;">margem da casa</strong> — uma vantagem estatística constante de 5%.</p>
+                <div style="background: rgba(249, 115, 22, 0.15); border-radius: 12px; padding: 15px; margin-top: 15px;">
+                    <strong style="color: #f97316;"> Big Data e IA</strong>
+                    <p style="margin-top: 5px;">Ajustam odds em tempo real, tornando a competição desleal para o apostador comum.</p>
+                </div>
+            </div>
+            <div class="simulator-card">
+                <h3 style="color:#f97316; margin-bottom: 15px;">Valor Esperado Negativo</h3>
+                <p><strong>Probabilidade real:</strong> 50% → Odd justa 2.00</p>
+                <p><strong>Odd oferecida:</strong> <span id="oddValue">1.90</span> → Vantagem da casa = <span id="houseEdge">5.26</span>%</p>
+                <div class="slider-container"><label>Simule a odd oferecida:</label><input type="range" id="oddSlider" min="1.50" max="2.00" step="0.01" value="1.90" /></div>
+                <div class="progress-bar-bg"><div id="edgeBar" style="width: 5.26%; background: linear-gradient(90deg, #f97316, #faa53d); height: 8px; border-radius: 4px;"></div></div>
+                <p>A cada R$ 100 apostados, o retorno médio é R$ <span id="expectedReturn">95.00</span>. A casa fica com R$ <span id="houseTake">5.00</span>.</p>
+                <div style="background: rgba(249, 115, 22, 0.15); border-radius: 8px; padding: 10px; margin-top: 15px;">⚠️ Vitórias ocasionais criam ilusão de controle</div>
             </div>
         </div>
     </section>
 
-    <!-- ====== FOOTER ====== -->
+    <section id="pesquisa">
+        <div class="container">
+            <h2 class="section-title">O que a População Realmente Pensa?</h2>
+            <p class="section-sub">Pesquisa realizada com <strong>334 participantes</strong> | Dados coletados entre 2025 - 2026 | TCC - ETEC Dep. Salim Sedeh</p>
+            <div class="chart-container">
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 96.4%, #2a2a35 96.4% 100%);"></div><div class="chart-value">96,4%</div><div>Conhecem apostas online</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 41.9%, #2a2a35 41.9% 100%);"></div><div class="chart-value">41,9%</div><div>Já apostaram pelo menos uma vez</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 75.4%, #2a2a35 75.4% 100%);"></div><div class="chart-value">75,4%</div><div>Conhecem alguém afetado negativamente</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 84.7%, #2a2a35 84.7% 100%);"></div><div class="chart-value">84,7%</div><div>Acreditam que apostas são prejudiciais</div></div>
+                <div class="chart-item"><div class="pie-chart" style="background: conic-gradient(#f97316 0% 84.4%, #2a2a35 84.4% 100%);"></div><div class="chart-value">84,4%</div><div>Apoiam mais restrições</div></div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Faixa etária dos participantes (334 respondentes):</strong></p>
+                <ul style="margin-top: 10px; list-style: none;"><li>• Menos de 18 anos: <strong>18,0%</strong></li> <li>• 18 a 30 anos: <strong>45,2%</strong></li> <li>• Mais de 30 anos: <strong>36,8%</strong></li></ul>
+                <hr style="margin: 15px 0; border-color: #f97316;" />
+                <p><strong>Principais motivações para apostar:</strong></p>
+                <ul style="margin-top: 10px; list-style: none;"><li>• Ganhar dinheiro: <strong>19,5%</strong></li><li>• Diversão: <strong>10,5%</strong></li><li>• Influência de amigos/familiares: <strong>9,0%</strong></li><li>• Nunca apostaram: <strong>58,1%</strong></li></ul>
+                <p style="margin-top: 15px;"> ✓ <strong>Conclusão:</strong> A sociedade demonstra preocupação e apoio a medidas que tragam mais controle e proteção aos consumidores.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="medidas" style="background: #050508;">
+        <div class="container">
+            <h2 class="section-title">Medidas para um Ambiente de Apostas Mais Seguro</h2>
+            <p class="section-sub">Baseado nos dados coletados (334 participantes, 84,4% apoiam mais restrições) e nas experiências internacionais, apresentamos sugestões que podem ser adotadas.</p>
+            <div class="card-medidas"><h3>Medidas de Controle e Transparência</h3><ul><li><i class="fas fa-fingerprint"></i> <strong>Cadastro com Verificação Biométrica</strong> - Sistema obrigatório de identificação com análise facial.</li><li><i class="fas fa-chart-line"></i> <strong>Limitação Progressiva de Apostas</strong> - Tetos para novos usuários nos primeiros 30 dias.</li><li><i class="fas fa-ban"></i> <strong>Restrição à Publicidade</strong> - Alertas visíveis sobre riscos, similar às campanhas antitabaco.</li><li><i class="fas fa-chart-simple"></i> <strong>Transparência nas Probabilidades</strong> - Exibir: "A expectativa matemática desta aposta é de perda."</li></ul></div>
+            <div class="card-medidas"><h3>Mecanismos de Proteção ao Consumidor</h3><ul><li><i class="fas fa-power-off"></i> <strong>Autoexclusão Unificada</strong> - Cadastro nacional para bloqueio de CPF em todas as plataformas.</li><li><i class="fas fa-bell"></i> <strong>Alertas de Comportamento</strong> - Notificações ao atingir 30%, 50% e 100% do limite de gastos.</li><li><i class="fas fa-clock"></i> <strong>Pausas Obrigatórias</strong> - após sessões prolongadas de jogo.</li><li><i class="fas fa-gift"></i> <strong>Fim dos Bônus Abusivos</strong> - Proibir bônus excessivos que estimulam o primeiro depósito.</li></ul></div>
+            <div class="card-medidas"><h3>Ações Conjuntas com o Setor Privado</h3><ul><li><i class="fas fa-university"></i> <strong>Parcerias com Bancos</strong> - Alertas de gastos com apostas.</li><li><i class="fab fa-instagram"></i> <strong>Responsabilidade das Plataformas Digitais</strong> - Restringir anúncios para jovens e vulneráveis.</li><li><i class="fas fa-chalkboard-user"></i> <strong>Campanhas Educativas</strong> - Conscientização nas escolas.</li></ul></div>
+            <div class="card-medidas"><h3>Educação e Conscientização</h3><ul><li><i class="fas fa-school"></i> <strong>Inclusão no Currículo Escolar</strong> - Educação financeira nas escolas.</li><li><i class="fas fa-phone-alt"></i> <strong>Canais de Apoio</strong> - Atendimento psicológico e financeiro para afetados pelo vício.</li><li><i class="fas fa-chalkboard-teacher"></i> <strong>Campanhas Públicas</strong> - Conscientização sobre o "jogo responsável".</li></ul></div>
+        </div>
+    </section>
+
     <footer>
         <div class="container">
-            <p>© 2024 JOGO JUSTO | TCC</p>
-            <p style="margin-top: 8px; color: #6b7280; font-size: 0.75rem;">Projeto acadêmico para fins educacionais</p>
+            <p>Trabalho de Conclusão de Curso - ETEC Dep. Salim Sedeh | Técnico Administrativo 2026</p>
+            <p>Autores: Emilly Romero Montes, Emily Cristine Emidio, Isabela Santos Camargo, Isabella dos Santos Mano, Jennifer Sampaio Souza</p>
+            <p>Dados: Banco Central (Nota Técnica 513/2024) e pesquisa primária com 334 participantes (2025 - 2026)</p>
+            <p style="margin-top: 5px; font-size: 0.7rem;">Orientador: Prof. Éder Jonas Oliveira de Moraes</p>
         </div>
     </footer>
 
