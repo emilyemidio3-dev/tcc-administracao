@@ -1,23 +1,31 @@
 // ========== CONTROLE DO MENU MOBILE ==========
 document.addEventListener('DOMContentLoaded', function() {
     const menuToggle = document.getElementById('menuToggle');
-    const menuClose = document.getElementById('menuClose');
     const navLinks = document.querySelector('.nav-links');
     const body = document.body;
-
-    // Abrir menu
-    if (menuToggle) {
-        menuToggle.addEventListener('click', function() {
-            navLinks.classList.add('active');
-            body.style.overflow = 'hidden'; // Impede scroll
-        });
+    
+    // Criar overlay se não existir
+    let overlay = document.querySelector('.menu-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'menu-overlay';
+        document.body.appendChild(overlay);
     }
 
-    // Fechar menu
-    if (menuClose) {
-        menuClose.addEventListener('click', function() {
-            navLinks.classList.remove('active');
-            body.style.overflow = ''; // Restaura scroll
+    // Abrir/fechar menu
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            navLinks.classList.toggle('active');
+            overlay.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+            body.classList.toggle('menu-open');
+            
+            // Muda o ícone entre ☰ e ✕
+            const icon = menuToggle.querySelector('.icon');
+            if (icon) {
+                icon.textContent = navLinks.classList.contains('active') ? '✕' : '☰';
+            }
         });
     }
 
@@ -26,15 +34,42 @@ document.addEventListener('DOMContentLoaded', function() {
     links.forEach(link => {
         link.addEventListener('click', function() {
             navLinks.classList.remove('active');
-            body.style.overflow = '';
+            overlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            body.classList.remove('menu-open');
+            
+            const icon = menuToggle.querySelector('.icon');
+            if (icon) {
+                icon.textContent = '☰';
+            }
         });
     });
 
-    // Fechar menu ao clicar fora (no overlay)
-    navLinks.addEventListener('click', function(e) {
-        if (e.target === this) {
+    // Fechar menu ao clicar no overlay
+    overlay.addEventListener('click', function() {
+        navLinks.classList.remove('active');
+        overlay.classList.remove('active');
+        menuToggle.classList.remove('active');
+        body.classList.remove('menu-open');
+        
+        const icon = menuToggle.querySelector('.icon');
+        if (icon) {
+            icon.textContent = '☰';
+        }
+    });
+
+    // Fechar menu ao redimensionar para desktop
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
             navLinks.classList.remove('active');
-            body.style.overflow = '';
+            overlay.classList.remove('active');
+            menuToggle.classList.remove('active');
+            body.classList.remove('menu-open');
+            
+            const icon = menuToggle.querySelector('.icon');
+            if (icon) {
+                icon.textContent = '☰';
+            }
         }
     });
 });
@@ -46,124 +81,89 @@ class SimulacaoAposta {
         this.rodadas = 0;
         this.rodadasTotais = 30;
         this.historico = [];
-        this.faseAtual = 'confianca'; // confianca, equilibrio, desvantagem
-        this.probabilidadeBase = 0.55;
+        this.faseAtual = 'confianca';
         this.probabilidadeAtual = 0.55;
         this.ganhosConsecutivos = 0;
         this.perdasConsecutivas = 0;
         this.totalApostado = 0;
         this.totalGanho = 0;
-        this.fatorSorte = 0;
-        
-        // Configurações por fase
-        this.configFases = {
-            confianca: {
-                duracao: 0.25, // 25% da sessão
-                probMin: 0.65,
-                probMax: 0.85,
-                multiplicadorMin: 1.1,
-                multiplicadorMax: 2.0,
-                tendencia: 'positiva'
-            },
-            equilibrio: {
-                duracao: 0.35, // 35% da sessão
-                probMin: 0.45,
-                probMax: 0.65,
-                multiplicadorMin: 0.8,
-                multiplicadorMax: 1.8,
-                tendencia: 'neutra'
-            },
-            desvantagem: {
-                duracao: 0.40, // 40% da sessão
-                probMin: 0.25,
-                probMax: 0.45,
-                multiplicadorMin: 0.5,
-                multiplicadorMax: 1.5,
-                tendencia: 'negativa'
-            }
-        };
     }
 
     // Determina a fase atual baseado na rodada
     determinarFase() {
         const progresso = this.rodadas / this.rodadasTotais;
         
-        if (progresso < this.configFases.confianca.duracao) {
+        if (progresso < 0.25) {
             this.faseAtual = 'confianca';
-        } else if (progresso < this.configFases.confianca.duracao + this.configFases.equilibrio.duracao) {
+        } else if (progresso < 0.60) {
             this.faseAtual = 'equilibrio';
         } else {
             this.faseAtual = 'desvantagem';
         }
         
-        // Atualiza a probabilidade baseada na fase
         this.atualizarProbabilidade();
     }
 
     // Atualiza a probabilidade de vitória com variações naturais
     atualizarProbabilidade() {
-        const config = this.configFases[this.faseAtual];
+        let prob = 0.55;
         
-        // Fator de variação natural (ruído)
-        const variacao = (Math.random() - 0.5) * 0.15;
-        
-        // Tendência da fase
-        let tendencia = 0;
-        if (config.tendencia === 'positiva') {
-            tendencia = 0.1 + (Math.random() * 0.1);
-        } else if (config.tendencia === 'negativa') {
-            tendencia = -0.1 - (Math.random() * 0.1);
-        } else {
-            tendencia = (Math.random() - 0.5) * 0.08;
+        switch(this.faseAtual) {
+            case 'confianca':
+                // Fase de confiança: alta probabilidade (70-85%)
+                prob = 0.70 + (Math.random() * 0.15);
+                // Efeito de sequência de vitórias (diminui ligeiramente para não ser muito óbvio)
+                if (this.ganhosConsecutivos > 2) {
+                    prob = Math.max(0.65, prob - 0.05 * this.ganhosConsecutivos);
+                }
+                break;
+                
+            case 'equilibrio':
+                // Fase de equilíbrio: probabilidade média (45-60%)
+                prob = 0.45 + (Math.random() * 0.15);
+                // Se estiver em sequência de perdas, dá uma chance
+                if (this.perdasConsecutivas > 3) {
+                    prob = Math.min(0.65, prob + 0.05);
+                }
+                break;
+                
+            case 'desvantagem':
+                // Fase de desvantagem: baixa probabilidade (25-40%)
+                prob = 0.25 + (Math.random() * 0.15);
+                // Se estiver perdendo muito, raramente dá uma vitória pequena
+                if (this.perdasConsecutivas > 5 && Math.random() < 0.2) {
+                    prob = 0.50 + (Math.random() * 0.10);
+                }
+                break;
         }
         
-        // Ajusta baseado em sequências (efeito de streak)
-        let streakAdjust = 0;
-        if (this.ganhosConsecutivos > 2) {
-            streakAdjust = -0.05 * Math.min(this.ganhosConsecutivos, 5);
-        } else if (this.perdasConsecutivas > 3) {
-            streakAdjust = 0.03 * Math.min(this.perdasConsecutivas, 4);
-        }
-        
-        // Calcula probabilidade final
-        let prob = config.probMin + (config.probMax - config.probMin) * Math.random();
-        prob += variacao + tendencia + streakAdjust;
-        
-        // Garante que fique dentro dos limites
-        prob = Math.max(config.probMin - 0.05, Math.min(config.probMax + 0.05, prob));
-        
-        this.probabilidadeAtual = prob;
+        this.probabilidadeAtual = Math.max(0.20, Math.min(0.90, prob));
     }
 
-    // Calcula o multiplicador baseado na fase e probabilidade
+    // Calcula o multiplicador baseado na fase
     calcularMultiplicador(venceu) {
-        const config = this.configFases[this.faseAtual];
+        if (!venceu) return 0;
         
-        let mult;
-        if (venceu) {
-            // Vitória: multiplicador geralmente maior na fase de confiança
-            const baseMult = config.multiplicadorMin + (config.multiplicadorMax - config.multiplicadorMin) * Math.random();
-            
-            // Vitórias na fase de desvantagem são menores
-            if (this.faseAtual === 'desvantagem') {
-                mult = baseMult * (0.6 + Math.random() * 0.3);
-            } else {
-                mult = baseMult;
-            }
-            
-            // Aumenta um pouco se estiver em sequência de perdas
-            if (this.perdasConsecutivas > 2) {
-                mult *= (1 + Math.random() * 0.2);
-            }
-        } else {
-            // Derrota: multiplicador base (perde a aposta)
-            mult = 0;
+        let mult = 1.5 + (Math.random() * 0.5);
+        
+        switch(this.faseAtual) {
+            case 'confianca':
+                // Ganhos generosos na fase de confiança
+                mult = 1.8 + (Math.random() * 0.7);
+                break;
+                
+            case 'equilibrio':
+                // Ganhos moderados
+                mult = 1.3 + (Math.random() * 0.5);
+                break;
+                
+            case 'desvantagem':
+                // Ganhos pequenos na fase final
+                mult = 1.1 + (Math.random() * 0.3);
+                break;
         }
         
-        // Garante que o multiplicador seja razoável
-        mult = Math.max(0, Math.min(3.0, mult));
-        
-        return mult;
+        return Math.max(0, Math.min(3.0, mult));
     }
 
     // Executa uma rodada da simulação
@@ -191,7 +191,7 @@ class SimulacaoAposta {
         
         if (venceu) {
             ganho = aposta * multiplicador;
-            novoSaldo = this.saldo + ganho - aposta; // subtrai a aposta e adiciona o ganho
+            novoSaldo = this.saldo + ganho - aposta;
             this.ganhosConsecutivos++;
             this.perdasConsecutivas = 0;
             this.totalGanho += ganho;
@@ -246,7 +246,6 @@ class SimulacaoAposta {
         const derrotas = totalRodadas - vitorias;
         const taxaVitoria = totalRodadas > 0 ? (vitorias / totalRodadas) * 100 : 0;
         
-        // Distribuição de resultados por fase
         const distribuicaoFases = {
             confianca: { rodadas: 0, vitorias: 0, saldo: 0 },
             equilibrio: { rodadas: 0, vitorias: 0, saldo: 0 },
@@ -342,7 +341,6 @@ function atualizarUI(resultado) {
             };
             faseDisplay.textContent = faseNomes[resultado.fase] || resultado.fase;
             
-            // Feedback visual da fase
             const faseColors = {
                 confianca: '#4ade80',
                 equilibrio: '#fbbf24',
@@ -351,7 +349,6 @@ function atualizarUI(resultado) {
             faseDisplay.style.color = faseColors[resultado.fase] || '#f97316';
         }
         
-        // Atualiza a barra de progresso
         if (edgeBar) {
             const progresso = (simulacao.rodadas / simulacao.rodadasTotais) * 100;
             edgeBar.style.width = `${Math.min(progresso, 100)}%`;
@@ -382,10 +379,6 @@ if (rollButton) {
         const resultado = simulacao.executarRodada(aposta);
         atualizarUI(resultado);
         
-        // Atualiza gráficos se existirem
-        atualizarGraficos();
-        
-        // Verifica se a simulação terminou
         if (simulacao.rodadas >= simulacao.rodadasTotais) {
             const stats = simulacao.getEstatisticas();
             setTimeout(() => {
@@ -417,42 +410,8 @@ if (resetButton) {
     });
 }
 
-// Função para atualizar gráficos (placeholder)
-function atualizarGraficos() {
-    // Aqui você pode implementar a atualização dos gráficos
-    // baseado no histórico da simulação
-    const stats = simulacao.getEstatisticas();
-    console.log('Estatísticas:', stats);
-    
-    // Exemplo: Atualizar gráficos de pizza se existirem
-    const pieCharts = document.querySelectorAll('.pie-chart');
-    if (pieCharts.length > 0 && stats.totalRodadas > 0) {
-        // Atualiza o primeiro gráfico com a taxa de vitórias
-        const vitorias = stats.vitorias;
-        const derrotas = stats.derrotas;
-        const total = stats.totalRodadas;
-        
-        if (total > 0) {
-            const vitoriasPercent = (vitorias / total) * 360;
-            const derrotasPercent = (derrotas / total) * 360;
-            
-            // Atualiza o gráfico de pizza (se for um elemento canvas ou div)
-            pieCharts.forEach((chart, index) => {
-                if (index === 0) {
-                    // Atualiza o primeiro gráfico com dados de vitórias/derrotas
-                    chart.style.background = `conic-gradient(
-                        #4ade80 0deg ${vitoriasPercent}deg, 
-                        #ef4444 ${vitoriasPercent}deg ${vitoriasPercent + derrotasPercent}deg
-                    )`;
-                }
-            });
-        }
-    }
-}
-
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
-    // Configura valor inicial da aposta
     if (betAmount) {
         betAmount.value = 10;
         betAmount.min = 1;
@@ -461,9 +420,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     atualizarUI(null);
-    
-    // Inicializa gráficos
-    atualizarGraficos();
 });
 
 // ========== ANIMAÇÃO DE SCROLL SUAVE ==========
@@ -478,23 +434,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             });
         }
     });
-});
-
-// ========== DETECTA DISPOSITIVO MÓVEL ==========
-function isMobile() {
-    return window.innerWidth <= 768;
-}
-
-// Atualiza a interface quando a janela for redimensionada
-window.addEventListener('resize', function() {
-    // Fecha o menu mobile se estiver aberto e a tela for maior que mobile
-    if (!isMobile()) {
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks) {
-            navLinks.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
 });
 
 console.log('🎰 Simulação de Apostas - TCC JOGO JUSTO');
