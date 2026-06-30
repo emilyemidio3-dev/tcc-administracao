@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
     
-    <!-- CSS - USANDO O ARQUIVO CORRETO -->
+    <!-- CSS -->
     <link rel="stylesheet" href="tcc_adm.css">
 </head>
 <body>
@@ -19,24 +19,22 @@
     <header>
         <div class="container">
             <nav class="navbar">
-                <!-- LOGO -->
                 <div class="logo">
-                    <img src="logo.png" alt="Logo Jogo Justo" class="logo-img">
+                    <img src="logo.png" alt="Logo" class="logo-img">
                     <div class="logo-text">
                         <h1>JOGO JUSTO</h1>
                         <p>TCC</p>
                     </div>
                 </div>
 
-                <!-- BOTÃO HAMBÚRGUER (mobile) -->
-                <button class="menu-toggle" id="menuToggle" aria-label="Menu">
+                <!-- Botão Menu Mobile -->
+                <button class="menu-toggle" id="menuToggle">
                     <span class="icon">☰</span>
                 </button>
 
-                <!-- LINKS DO MENU -->
                 <div class="nav-links">
-                    <a href="index.html">Início</a>
-                    <a href="simulação.html">Simulador</a>
+                    <a href="#home">Início</a>
+                    <a href="#simulador">Simulador</a>
                     <a href="#estatisticas">Estatísticas</a>
                     <a href="#medidas">Medidas</a>
                     <a href="#sobre">Sobre</a>
@@ -45,115 +43,180 @@
         </div>
     </header>
 
-    <!-- OVERLAY (para fechar menu clicando fora) -->
     <div class="menu-overlay"></div>
 
-    <!-- ====== CONTEÚDO PRINCIPAL ====== -->
-    <main>
-        <!-- ====== HERO ====== -->
-        <section id="home" class="hero">
-            <div class="container">
-                <h2>Entenda como a <span>vantagem da casa</span> funciona na prática</h2>
-                <p>Uma simulação acadêmica para demonstrar o comportamento das plataformas de apostas</p>
-            </div>
-        </section>
+    <!-- ====== HERO ====== -->
+    <section id="home" class="hero">
+        <div class="container">
+            <h2>Entenda como a <span>vantagem da casa</span> funciona na prática</h2>
+            <p>Uma simulação acadêmica para demonstrar o comportamento das plataformas de apostas</p>
+        </div>
+    </section>
 
-        <!-- ====== STATS ====== -->
-        <section id="estatisticas">
-            <div class="container">
-                <h2 class="section-title">📊 Estatísticas do Mercado</h2>
-                <p class="section-sub">Dados sobre o comportamento das plataformas de apostas e seus usuários</p>
+    <!-- ====== ESTATÍSTICAS ====== -->
+    <section id="estatisticas">
+        <div class="container">
+            <h2 class="section-title">📊 Estatísticas do Mercado</h2>
+            <p class="section-sub">Dados sobre o comportamento das plataformas de apostas</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">85%</div>
+                    <div class="stat-label">Perdem dinheiro a longo prazo</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">2.5x</div>
+                    <div class="stat-label">Mais chance no início</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">30%</div>
+                    <div class="stat-label">Continuam após perder</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12%</div>
+                    <div class="stat-label">Retorno médio</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SIMULADOR ====== -->
+    <section id="simulador">
+        <div class="container">
+            <h2 class="section-title">🎰 Simulador de Apostas</h2>
+            <p class="section-sub">Entenda como a sensação inicial de ganho leva à perda</p>
+            
+            <div class="simulator-card">
+                <h3>💰 Simulação Interativa</h3>
                 
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number">85%</div>
-                        <div class="stat-label">Dos apostadores perdem dinheiro a longo prazo</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0;">
+                    <div>
+                        <p style="color: #9ca3af; font-size: 0.85rem;">Saldo</p>
+                        <p id="saldo" style="font-size: 1.8rem; font-weight: 700; color: #4ade80;">R$ 100.00</p>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">2.5x</div>
-                        <div class="stat-label">Maior probabilidade de vitória no início</div>
+                    <div>
+                        <p style="color: #9ca3af; font-size: 0.85rem;">Rodada</p>
+                        <p id="rodada" style="font-size: 1.8rem; font-weight: 700; color: #f97316;">0 de 30</p>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">30%</div>
-                        <div class="stat-label">Dos usuários continuam apostando após perder</div>
+                    <div>
+                        <p style="color: #9ca3af; font-size: 0.85rem;">Resultado</p>
+                        <p id="resultado" style="font-size: 1.2rem; font-weight: 600;">-</p>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number">12%</div>
-                        <div class="stat-label">Taxa média de retorno para o apostador</div>
+                    <div>
+                        <p style="color: #9ca3af; font-size: 0.85rem;">Fase</p>
+                        <p id="fase" style="font-size: 1.2rem; font-weight: 600; color: #f97316;">-</p>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- ====== MEDIDAS ====== -->
-        <section id="medidas">
-            <div class="container">
-                <h2 class="section-title">🛡️ Medidas de Proteção</h2>
-                <p class="section-sub">Como se proteger dos efeitos da vantagem da casa</p>
+                <div style="margin: 20px 0;">
+                    <p style="color: #9ca3af; font-size: 0.85rem;">Progresso</p>
+                    <div class="progress-bar-bg">
+                        <div id="edgeBar" style="width: 0%;"></div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="betAmount" style="color: #9ca3af;">Valor da aposta:</label>
+                    <input type="number" id="betAmount" value="10" min="1" max="100" step="0.5" 
+                           style="width: 100%; padding: 12px; background: #1a1a1f; border: 1px solid #2a2a30; border-radius: 12px; color: #ECECEC; margin: 10px 0;">
+                </div>
+
+                <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                    <button id="rollButton" style="padding: 14px 40px; background: linear-gradient(135deg, #f97316, #faa53d); border: none; border-radius: 12px; color: #fff; font-weight: 700; cursor: pointer; flex: 1; min-width: 140px;">
+                        🎲 Apostar
+                    </button>
+                    <button id="resetButton" style="padding: 14px 30px; background: #1a1a1f; border: 1px solid #2a2a30; border-radius: 12px; color: #ECECEC; font-weight: 600; cursor: pointer; flex: 1; min-width: 140px;">
+                        🔄 Reiniciar
+                    </button>
+                </div>
+
+                <div style="margin-top: 20px; display: flex; gap: 16px; justify-content: center; font-size: 0.85rem; flex-wrap: wrap;">
+                    <span style="display: flex; align-items: center; gap: 6px;">
+                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #4ade80;"></span>
+                        Confiança
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 6px;">
+                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #fbbf24;"></span>
+                        Equilíbrio
+                    </span>
+                    <span style="display: flex; align-items: center; gap: 6px;">
+                        <span style="display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ef4444;"></span>
+                        Desvantagem
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== MEDIDAS ====== -->
+    <section id="medidas">
+        <div class="container">
+            <h2 class="section-title">🛡️ Medidas de Proteção</h2>
+            <p class="section-sub">Como se proteger dos efeitos da vantagem da casa</p>
+            
+            <div class="card-medidas">
+                <h3>📌 Estabeleça Limites</h3>
+                <ul>
+                    <li>Defina um valor máximo para apostar por dia</li>
+                    <li>Estabeleça um limite de perda diário</li>
+                    <li>Nunca aposte mais do que pode perder</li>
+                </ul>
+            </div>
+
+            <div class="card-medidas">
+                <h3>⏰ Controle de Tempo</h3>
+                <ul>
+                    <li>Defina um tempo limite para suas sessões</li>
+                    <li>Faça pausas regulares</li>
+                    <li>Evite apostar quando estiver cansado</li>
+                </ul>
+            </div>
+
+            <div class="card-medidas">
+                <h3>🧠 Conscientização</h3>
+                <ul>
+                    <li>Entenda que a casa sempre tem vantagem</li>
+                    <li>Reconheça os sinais de comportamento de risco</li>
+                    <li>Busque ajuda se perder o controle</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== SOBRE ====== -->
+    <section id="sobre">
+        <div class="container">
+            <h2 class="section-title">📚 Sobre o Projeto</h2>
+            <p class="section-sub">Trabalho acadêmico para o TCC sobre o comportamento das plataformas de apostas</p>
+            
+            <div class="highlight-box">
+                <h3 style="color: #f97316;">🎯 Objetivo</h3>
+                <p>Demonstrar como as plataformas de apostas utilizam a sensação inicial de ganho para incentivar os usuários a continuarem apostando.</p>
                 
-                <div class="card-medidas">
-                    <h3>📌 Estabeleça Limites</h3>
-                    <ul>
-                        <li><i>➜</i> Defina um valor máximo para apostar por dia</li>
-                        <li><i>➜</i> Estabeleça um limite de perda diário</li>
-                        <li><i>➜</i> Nunca aposte mais do que pode perder</li>
-                    </ul>
-                </div>
-
-                <div class="card-medidas">
-                    <h3>⏰ Controle de Tempo</h3>
-                    <ul>
-                        <li><i>➜</i> Defina um tempo limite para suas sessões</li>
-                        <li><i>➜</i> Faça pausas regulares</li>
-                        <li><i>➜</i> Evite apostar quando estiver cansado ou estressado</li>
-                    </ul>
-                </div>
-
-                <div class="card-medidas">
-                    <h3>🧠 Conscientização</h3>
-                    <ul>
-                        <li><i>➜</i> Entenda que a casa sempre tem vantagem</li>
-                        <li><i>➜</i> Reconheça os sinais de comportamento de risco</li>
-                        <li><i>➜</i> Busque ajuda se sentir que está perdendo o controle</li>
-                    </ul>
-                </div>
+                <h3 style="color: #f97316; margin-top: 20px;">🔬 Fases da Simulação</h3>
+                <ul style="list-style: none; margin-top: 12px;">
+                    <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <strong style="color: #4ade80;">Confiança:</strong> Altas probabilidades de vitória
+                    </li>
+                    <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                        <strong style="color: #fbbf24;">Equilíbrio:</strong> Resultados mistos
+                    </li>
+                    <li style="padding: 8px 0;">
+                        <strong style="color: #ef4444;">Desvantagem:</strong> Baixas probabilidades
+                    </li>
+                </ul>
             </div>
-        </section>
-
-        <!-- ====== SOBRE ====== -->
-        <section id="sobre">
-            <div class="container">
-                <h2 class="section-title">📚 Sobre o Projeto</h2>
-                <p class="section-sub">Este é um trabalho acadêmico para o TCC sobre o comportamento das plataformas de apostas</p>
-                
-                <div class="highlight-box">
-                    <h3 style="color: #f97316; margin-bottom: 12px;">🎯 Objetivo</h3>
-                    <p>Demonstrar como as plataformas de apostas utilizam a sensação inicial de ganho para incentivar os usuários a continuarem apostando, levando a perdas progressivas ao longo do tempo.</p>
-                    
-                    <h3 style="color: #f97316; margin-top: 20px; margin-bottom: 12px;">🔬 Metodologia</h3>
-                    <p>A simulação utiliza probabilidades variáveis para replicar o comportamento real das plataformas, dividindo a experiência em três fases distintas:</p>
-                    <ul style="list-style: none; margin-top: 12px;">
-                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">✅ <strong style="color: #4ade80;">Confiança:</strong> Altas probabilidades de vitória para criar confiança</li>
-                        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">⚖️ <strong style="color: #fbbf24;">Equilíbrio:</strong> Resultados mistos para manter o engajamento</li>
-                        <li style="padding: 8px 0;">📉 <strong style="color: #ef4444;">Desvantagem:</strong> Baixas probabilidades onde a casa prevalece</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
     <!-- ====== FOOTER ====== -->
     <footer>
         <div class="container">
-            <p>© 2024 JOGO JUSTO | TCC - Todos os direitos reservados</p>
-            <p style="margin-top: 8px; color: #6b7280; font-size: 0.75rem;">
-                Este é um projeto acadêmico para fins educacionais
-            </p>
+            <p>© 2024 JOGO JUSTO | TCC</p>
+            <p style="margin-top: 8px; color: #6b7280; font-size: 0.75rem;">Projeto acadêmico para fins educacionais</p>
         </div>
     </footer>
 
-    <!-- ====== JAVASCRIPT - USANDO O ARQUIVO CORRETO ====== -->
     <script src="tcc_adm.js"></script>
-
 </body>
 </html>
