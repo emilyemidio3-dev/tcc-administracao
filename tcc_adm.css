@@ -401,7 +401,6 @@ footer {
         padding: 0 16px;
     }
 
-    /* HEADER - mantém sticky */
     header {
         position: sticky;
         top: 0;
@@ -417,7 +416,6 @@ footer {
         gap: 12px;
     }
 
-    /* Logo mantém tamanho original */
     .logo {
         display: flex;
         align-items: center;
@@ -437,7 +435,6 @@ footer {
         font-size: 0.65rem;
     }
 
-    /* Botão hambúrguer - visível no mobile */
     .menu-toggle {
         display: flex;
         background: none;
@@ -451,11 +448,10 @@ footer {
         margin-left: auto;
     }
 
-    /* Menu lateral - abre pela direita, abaixo do header */
     .nav-links {
         display: none;
         position: fixed;
-        top: 72px; /* Altura aproximada do header */
+        top: 72px;
         right: -100%;
         width: 280px;
         height: calc(100vh - 72px);
@@ -489,7 +485,6 @@ footer {
         height: 2px;
     }
 
-    /* Overlay para fechar ao clicar fora */
     .menu-overlay {
         display: none;
         position: fixed;
@@ -505,12 +500,10 @@ footer {
         display: block;
     }
 
-    /* Impede scroll da página quando menu está aberto */
     body.menu-open {
         overflow: hidden;
     }
 
-    /* HERO - mantém original */
     .hero {
         padding: 40px 0 30px;
     }
@@ -529,7 +522,6 @@ footer {
         padding: 0 4px;
     }
 
-    /* STATS - mantém original */
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 16px;
@@ -550,7 +542,6 @@ footer {
         margin-top: 8px;
     }
 
-    /* SECTION TITLES - mantém original */
     .section-title {
         font-size: 1.7rem;
         margin-bottom: 14px;
@@ -562,7 +553,6 @@ footer {
         padding: 0 6px;
     }
 
-    /* HIGHLIGHT - mantém original */
     .highlight-box {
         padding: 18px;
         margin: 18px 0;
@@ -574,7 +564,6 @@ footer {
         font-size: 0.95rem;
     }
 
-    /* SIMULATOR - mantém original */
     .simulator-card {
         padding: 20px 16px;
         margin: 18px 0;
@@ -588,7 +577,6 @@ footer {
         font-size: 0.95rem;
     }
 
-    /* CHARTS - mantém original */
     .chart-container {
         gap: 16px;
         margin: 24px 0;
@@ -613,7 +601,6 @@ footer {
         font-size: 0.8rem;
     }
 
-    /* MEDIDAS - mantém original */
     .card-medidas {
         padding: 18px 16px;
         margin: 16px 0;
@@ -633,7 +620,6 @@ footer {
         font-size: 0.9rem;
     }
 
-    /* FOOTER - mantém original */
     footer {
         padding: 24px 0;
         font-size: 0.8rem;
@@ -644,7 +630,6 @@ footer {
     }
 }
 
-/* Celulares muito pequenos (até 400px) */
 @media (max-width: 400px) {
     .container {
         padding: 0 10px;
